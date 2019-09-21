@@ -1,19 +1,28 @@
 import React from 'react';
-import './App.css';
+import { Container, Divider, Header } from 'semantic-ui-react';
 
+import './App.css';
+import useBabyLogState from './useBabyLogState';
+import LogDateNavigation from './components/LogDateNavigation';
 import FeedLog from './components/FeedLog';
 
 function App() {
-  return (
-    <div>
-      <header>
-        <h1>Baby feedings</h1>
-      </header>
-      <section>
-        <FeedLog />
-      </section>
-    </div>
-  );
+    const date = "2019-11-01";
+
+    const [getLogEntries] = useBabyLogState();
+
+    return (
+        <div>
+          <Container className="App-main">
+            <Header as="h1">Baby Log</Header>
+          </Container>
+          <Divider />
+          <Container>
+            <LogDateNavigation date={ date } />
+            <FeedLog logEntries={ getLogEntries(date) }/>
+          </Container>
+        </div>
+    );
 }
 
 export default App;

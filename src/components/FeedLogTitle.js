@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
 
-function FeedLogItem() {
+function FeedLogTitle() {
     return (
       <Table.Row>
         <Table.HeaderCell>Time</Table.HeaderCell>
@@ -14,4 +14,4 @@ function FeedLogItem() {
     );
 }
 
-export default FeedLogItem;
+export default FeedLogTitle;
