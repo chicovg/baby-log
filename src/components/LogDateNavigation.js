@@ -12,13 +12,13 @@ function logLink(date) {
 function LogDateNavigation({date}) {
     return (
         <div>
-          <Link href={ logLink(previousDateKey()) }>
+          <Link href={ logLink(previousDateKey(date)) }>
             <Icon name="left arrow" />
           </Link>
           <span className="log-date">
             <strong>{ toDisplayDate(date) }</strong>
           </span>
-          <Link href={ logLink(nextDateKey()) }>
+          <Link href={ logLink(nextDateKey(date)) }>
             <Icon name="right arrow" />
           </Link>
         </div>
