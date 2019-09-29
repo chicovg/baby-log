@@ -1,23 +1,26 @@
 import React from 'react';
-import { Button, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-component';
+import { Icon } from 'semantic-ui-react';
 
-import { toDisplayDate } from '../utils/dates';
+import { previousDateKey, nextDateKey, toDisplayDate } from '../utils/dates';
 import './LogDateNavigation.css';
 
-// todo: will need a change date function passed in...
+function logLink(date) {
+    return `#/log/${ date }`;
+}
+
 function LogDateNavigation({date}) {
-    // todo format the date
     return (
         <div>
-          <Button icon>
-            <Icon name='left arrow' />
-          </Button>
+          <Link href={ logLink(previousDateKey()) }>
+            <Icon name="left arrow" />
+          </Link>
           <span className="log-date">
             <strong>{ toDisplayDate(date) }</strong>
           </span>
-          <Button icon>
-            <Icon name='right arrow' />
-          </Button>
+          <Link href={ logLink(nextDateKey()) }>
+            <Icon name="right arrow" />
+          </Link>
         </div>
     );
 }

@@ -1,26 +1,22 @@
 import React from 'react';
+import { Location, Locations } from 'react-router-component';
 import { Container, Divider, Header } from 'semantic-ui-react';
 
 import './App.css';
-import useBabyLogState from './useBabyLogState';
-import LogDateNavigation from './components/LogDateNavigation';
-import FeedLog from './components/FeedLog';
+import CurrentLogPage from './components/CurrentLogPage';
+import LogPage from './components/LogPage';
 
 function App() {
-    const date = "2019-11-01";
-
-    const [getLogEntries] = useBabyLogState();
-
     return (
-        <div>
-          <Container className="App-main">
+        <div className="App-main">
+          <Container>
             <Header as="h1">Baby Log</Header>
           </Container>
           <Divider />
-          <Container>
-            <LogDateNavigation date={ date } />
-            <FeedLog logEntries={ getLogEntries(date) }/>
-          </Container>
+          <Locations hash>
+            <Location path="/" handler={ CurrentLogPage }/>
+            <Location path="/log/:date" handler={ LogPage } />
+          </Locations>
         </div>
     );
 }
