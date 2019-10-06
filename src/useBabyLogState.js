@@ -12,7 +12,7 @@ const setLocalStorage = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
 };
 
-const useBabyLogState =  () => {
+const useBabyLogState = () => {
     const [logEntries, setLogEntries] = React.useState(
         getFromLocalStorage(logEntriesKey, {})
     );
@@ -22,8 +22,21 @@ const useBabyLogState =  () => {
     }, [logEntries]);
 
     const getLogEntriesForDate = (dateKey) => logEntries[dateKey] || [];
+    const addLogEntryForDate = (dateKey, entry) => {
+        const entriesForDate = getLogEntriesForDate(dateKey);
+        const updatedEntriesForDate = [
+            ...entriesForDate,
+            entry
+        ];
+        const updatedEntries = {
+            ...logEntries,
+            [dateKey]: updatedEntriesForDate,
+        };
 
-    return [getLogEntriesForDate, setLogEntries];
+        setLogEntries(updatedEntries);
+    };
+
+    return [getLogEntriesForDate, addLogEntryForDate];
 };
 
 export default useBabyLogState;

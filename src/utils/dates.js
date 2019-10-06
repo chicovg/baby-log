@@ -1,6 +1,8 @@
 import moment from 'moment';
 
-const DATE_KEY_FORMAT = "YYYY-MM-DD";
+console.log(moment.locale());
+
+export const DATE_KEY_FORMAT = "YYYY-MM-DD";
 const DATE_DISPLAY_FORMAT = "dddd MMMM Do YYYY";
 
 export const toDisplayDate = (dateKey) => moment(dateKey).format(DATE_DISPLAY_FORMAT);
