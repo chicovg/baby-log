@@ -5,7 +5,7 @@ import useBabyLogState from '../useBabyLogState';
 import LogEntryForm from './LogEntryForm';
 
 function LogEntryPage() {
-    const [getLogEntriesForDate, addLogEntryForDate] = useBabyLogState();
+    const [ , addLogEntryForDate] = useBabyLogState();
 
     return (
         <Container>

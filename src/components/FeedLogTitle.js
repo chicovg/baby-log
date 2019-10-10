@@ -9,7 +9,6 @@ function FeedLogTitle() {
         <Table.HeaderCell>Amount or Duration</Table.HeaderCell>
         <Table.HeaderCell>Diaper</Table.HeaderCell>
         <Table.HeaderCell>Mood</Table.HeaderCell>
-        <Table.HeaderCell>Comments</Table.HeaderCell>
       </Table.Row>
     );
 }

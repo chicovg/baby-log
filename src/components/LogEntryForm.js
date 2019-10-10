@@ -11,13 +11,7 @@ import {
     TimeInput,
 } from 'semantic-ui-calendar-react';
 
-import {
-    DATE_KEY_FORMAT,
-    currentDateKey,
-    previousDateKey,
-    nextDateKey,
-    toDisplayDate,
-} from '../utils/dates';
+import { DATE_KEY_FORMAT } from '../utils/dates';
 import {
     EVENT,
     FEEDING,
@@ -207,21 +201,22 @@ function Diaper({ isDiaper, diaper, handleChange }) {
     );
 }
 
+const initialState = {
+    date: '',
+    time: '',
+    mood: '',
+    event: '',
+    feeding: '',
+    breast: '',
+    duration: '',
+    amount: '',
+    diaper: '',
+};
 
 class LogEntryForm extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            date: '',
-            time: '',
-            mood: '',
-            event: '',
-            feeding: '',
-            breast: '',
-            duration: '',
-            amount: '',
-            diaper: '',
-        };
+        this.state = initialState;
         this.addLogEntryForDate = props.addLogEntryForDate;
     }
 
@@ -248,13 +243,10 @@ class LogEntryForm extends Component {
     };
 
     handleSubmit = () => {
-        console.log(this.state);
+        // TODO handle errors...
         this.addLogEntryForDate(this.state.date, {...this.state});
-        /* TODO
-          take state
-          store it.
-          update location (log view)
-       */
+        this.setState(initialState);
+        window.location.hash = '/';
     }
 
     render() {
