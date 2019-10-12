@@ -4,10 +4,15 @@ import { Divider } from 'semantic-ui-react';
 
 import './App.css';
 import AppHeader from './components/AppHeader';
+import AppLoader from './components/AppLoader';
 import CurrentLogPage from './components/CurrentLogPage';
 import LogPage from './components/LogPage';
 import LogEntryPage from './components/LogEntryPage';
-import { getLogEntries, listenToAuth, signIn } from './firebaseUtils';
+import {
+    getLogEntries,
+    listenToAuth,
+    signIn,
+} from './firebaseUtils';
 
 class App extends Component {
     constructor(props) {
@@ -24,20 +29,27 @@ class App extends Component {
     }
 
     componentDidMount() {
-        listenToAuth((user) => this.setState({ user }));
+        listenToAuth((user) => {
+            if (!user) {
+                signIn(
+                    result => console.log(result),
+                    signInError => this.setState({ signInError }),
+                );
+            }
 
-        signIn(
-            result => console.log(result),
-            signInError => this.setState({ signInError }),
-        );
+            this.setState({ user });
+        });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.state.user) {
             getLogEntries(
-                this.state.userId,
-                logEntries => this.setState({ logEntries }),
-                firestoreError => this.setState({ firestoreError })
+                this.state.user.uid,
+                logEntries => this.setState({
+                    logEntries,
+                    loading: false,
+                }),
+                firestoreError => this.setState({ firestoreError }) // TODO set loading once I have error messages
             );
         }
     }
@@ -48,6 +60,10 @@ class App extends Component {
               <AppHeader />
               <Divider />
               <pre>{ JSON.stringify(this.state.logEntries) }</pre>
+              <AppLoader
+                isSignedIn={ this.state.user }
+                isLoading={ this.state.loading }
+              />
               <Locations hash>
                 <Location path="/" handler={ CurrentLogPage }/>
                 <Location path="/log/new" handler={ LogEntryPage }/>

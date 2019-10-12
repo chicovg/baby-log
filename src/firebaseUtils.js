@@ -23,7 +23,7 @@ export const listenToAuth = (onAuthChanged) => {
 };
 
 export const signIn = (onSuccess, onError) => {
-    firebase.auth().signInWithPopup(provider)
+    firebase.auth().signInWithRedirect(provider)
         .then(onSuccess)
         .catch(onError);
 };
@@ -31,8 +31,7 @@ export const signIn = (onSuccess, onError) => {
 const db = firebase.firestore();
 
 export const getLogEntries = (userId, receiveEntries, receiveError) => {
-    db.collection('entries')
-        .where('userId', '==', 'wbGq0kdqlpWqNT74WccmPZLQB7l1')
+    db.collection('users').doc(userId).collection('entries')
         .get()
         .then(snapshot => {
             let entries = [];
