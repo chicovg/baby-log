@@ -4,8 +4,8 @@ export const EVENT = {
 };
 
 export const FEEDING = {
-    BREAST: 't',
-    BOTTLE: 'l',
+    BREAST: 'r',
+    BOTTLE: 'o',
 };
 
 export const BREAST = {
