@@ -1,15 +1,5 @@
-import React, { Component, Fragment, useEffect, useState } from 'react';
-import {
-    Button,
-    Container,
-    Form,
-    Header,
-    Input
-} from 'semantic-ui-react';
-import {
-    DateInput,
-    TimeInput,
-} from 'semantic-ui-calendar-react';
+import React, { useEffect, useState } from 'react';
+import { Button, Form } from 'semantic-ui-react';
 
 import Amount from './inputs/Amount';
 import Breast from './inputs/Breast';
@@ -21,13 +11,7 @@ import FeedingOrDiaper from './inputs/FeedingOrDiaper';
 import Mood from './inputs/Mood';
 import Time from './inputs/Time';
 
-import { DATE_KEY_FORMAT } from '../utils/dates';
-import {
-    EVENT,
-    FEEDING,
-    BREAST,
-    DIAPER,
-} from '../utils/constants';
+import { EVENT, FEEDING } from '../utils/constants';
 
 const initialState = {
     date: '',
@@ -88,7 +72,7 @@ function LogEntryForm(props) {
             ...entryProp,
             date: dateProp,
         });
-    }, [dateProp, entryProp]);
+    }, [dateProp, entryProp, entryState]);
 
     const handleChange = handleEntryChange(entryState, setEntryState);
     const handleSubmit = handleEntrySubmit(entryState, saveEntry);
@@ -161,7 +145,7 @@ function LogEntryForm(props) {
           >
             Submit
           </Button>
-          <pre>{ JSON.stringify(entryState, null, 2) }</pre>
+          {/* <pre>{ JSON.stringify(entryState, null, 2) }</pre> */}
         </Form>
     );
 }

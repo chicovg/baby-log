@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-component';
-import { Button, Icon } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 
 import { previousDateKey, nextDateKey, toDisplayDate } from '../utils/dates';
 import './LogDateNavigation.css';

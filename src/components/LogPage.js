@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
-import { useFirestoreConnect } from 'react-redux-firebase';
 
 import LogDateNavigation from './LogDateNavigation';
 import Log from './Log';
@@ -32,7 +31,7 @@ const selectLogEntries = date => state => {
             id: key,
             ...entriesMap[key],
         }))
-        .filter(entry => entry.date == date);
+        .filter(entry => entry.date === date);
 
     entries.sort(timeComparator);
 
@@ -40,7 +39,6 @@ const selectLogEntries = date => state => {
 };
 
 function LogPage({ date: dateProp }) {
-    const userId = useSelector(state => state.firebase.auth.uid);
     const date = dateProp || currentDateKey();
     const entries = useSelector(selectLogEntries(date));
 

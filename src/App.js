@@ -1,7 +1,4 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Location, Locations } from 'react-router-component';
-import { Divider } from 'semantic-ui-react';
+import React from 'react';
 
 import './App.css';
 

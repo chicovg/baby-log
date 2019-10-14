@@ -1,11 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { combineReducers, compose, createStore } from 'redux';
 import { ReactReduxFirebaseProvider, firebaseReducer } from 'react-redux-firebase';
 import { createFirestoreInstance, firestoreReducer, reduxFirestore } from 'redux-firestore';
-
-import { composeWithDevTools } from 'redux-devtools-extension';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
