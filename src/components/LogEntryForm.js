@@ -12,6 +12,7 @@ import Mood from './inputs/Mood';
 import Time from './inputs/Time';
 
 import { EVENT, FEEDING } from '../utils/constants';
+import { currentTime } from '../utils/dates';
 
 const initialState = {
     date: '',
@@ -53,29 +54,28 @@ const handleEntryChange = (entry, setEntry) => (e, { name, value }) => {
     }
 };
 
-const handleEntrySubmit = (entry, saveEntry) => () => {
+const handleEntrySubmit = (logId, entry, saveEntry) => () => {
     return saveEntry(entry)
-        .then(() => window.location.hash = `/entries/${entry.date}`);
+        .then(() => window.location.hash = `/logs/${logId}/entries/${entry.date}`);
 };
 
-function LogEntryForm(props) {
+function LogEntryForm({
+    logId,
+    date: dateProp,
+    entry: entryProp,
+    saveEntry,
+}) {
     const [entryState, setEntryState] = useState(initialState);
-    const {
-        date: dateProp,
-        entry: entryProp,
-        saveEntry,
-    } = props;
 
     useEffect(() => {
         setEntryState({
-            ...entryState,
+            time: currentTime(),
             ...entryProp,
-            date: dateProp,
         });
-    }, [dateProp, entryProp, entryState]);
+    }, [dateProp, entryProp]);
 
     const handleChange = handleEntryChange(entryState, setEntryState);
-    const handleSubmit = handleEntrySubmit(entryState, saveEntry);
+    const handleSubmit = handleEntrySubmit(logId, entryState, saveEntry);
 
     const {
         date,
@@ -91,7 +91,8 @@ function LogEntryForm(props) {
     const eventPopulated = date && time && event;
     const breastFeedingPopulated = feeding && breast && duration;
     const bottleFeedingPopulated = feeding && amount;
-    const submitEnabled = eventPopulated && (breastFeedingPopulated || bottleFeedingPopulated || diaper);
+    const submitEnabled = eventPopulated
+          && (breastFeedingPopulated || bottleFeedingPopulated || diaper);
 
     return (
         <Form onSubmit={ handleSubmit }>
@@ -108,7 +109,8 @@ function LogEntryForm(props) {
           <Form.Group>
             <Mood
               mood={ mood }
-              handleChange={ handleChange }/>
+              handleChange={ handleChange }
+            />
           </Form.Group>
           <FeedingOrDiaper
             event={ event }

@@ -1,51 +1,42 @@
 import React from 'react';
 import { Container } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
+import { useFirestoreConnect } from 'react-redux-firebase';
 
+import AppLoader from './AppLoader';
 import LogDateNavigation from './LogDateNavigation';
 import Log from './Log';
+import {
+    selectEntriesQueryStatus,
+    selectUserId,
+    selectUserLogEntries
+} from '../redux/selectors';
 import { currentDateKey } from '../utils/dates';
 
-const timeComparator = (e1, e2) => {
-    if (e1.time < e2.time) {
-        return -1;
-    }
-    if (e1.time > e2.time) {
-        return 1;
-    }
-    return 0;
-};
+function LogPage({ date: dateProp, logId }) {
+    const userId = useSelector(selectUserId);
+    const entriesQuery = `/users/${userId}/logs/${logId}/entries`;
 
-const selectLogEntries = date => state => {
-    const userId = state.firebase.auth.uid;
-    const users = state.firestore.data.users;
+    useFirestoreConnect([entriesQuery], [logId, userId]);
 
-    if (!users) {
-        return [];
-    }
-
-    const entriesMap = users[userId].entries;
-
-    let entries = Object.keys(entriesMap)
-        .map(key => ({
-            id: key,
-            ...entriesMap[key],
-        }))
-        .filter(entry => entry.date === date);
-
-    entries.sort(timeComparator);
-
-    return entries;
-};
-
-function LogPage({ date: dateProp }) {
     const date = dateProp || currentDateKey();
-    const entries = useSelector(selectLogEntries(date));
+    const entries = useSelector(selectUserLogEntries(userId, logId, date));
+    const entriesRequested = useSelector(selectEntriesQueryStatus(userId, logId));
 
     return (
         <Container>
-          <LogDateNavigation date={ date } />
-          <Log logEntries={ entries }/>
+          <AppLoader
+            isSignedIn={ userId }
+            isLoading={ !entriesRequested }
+          />
+          <LogDateNavigation
+            date={ date }
+            logId={ logId }
+          />
+          <Log
+            logEntries={ entries }
+            logId={ logId }
+          />
         </Container>
     );
 }

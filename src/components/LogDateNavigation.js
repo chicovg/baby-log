@@ -5,34 +5,30 @@ import { Icon } from 'semantic-ui-react';
 import { previousDateKey, nextDateKey, toDisplayDate } from '../utils/dates';
 import './LogDateNavigation.css';
 
-function localClassName(name) {
-    return `LogDateNavigation-${ name }`;
+function logLink(logId, date) {
+    return `#/logs/${logId}/entries/${ date }`;
 }
 
-function logLink(date) {
-    return `#/entries/${ date }`;
+function addEntryLink(logId, date) {
+    return `#/logs/${logId}/add-entry/${ date }`;
 }
 
-function addEntryLink(date) {
-    return `#/add-entry/${ date }`;
-}
-
-function LogDateNavigation({date}) {
+function LogDateNavigation({ logId, date }) {
     return (
-        <div className={ localClassName('nav') }>
+        <div className="log-date-nav">
           <div>
-            <Link href={ logLink(previousDateKey(date)) }>
+            <Link href={ logLink(logId, previousDateKey(date)) }>
               <Icon name="left arrow" />
             </Link>
-            <span className={ localClassName('log-date') }>
+            <span className="log-date">
               <strong>{ toDisplayDate(date) }</strong>
             </span>
-            <Link href={ logLink(nextDateKey(date)) }>
+            <Link href={ logLink(logId, nextDateKey(date)) }>
               <Icon name="right arrow" />
             </Link>
           </div>
-          <Link href={ addEntryLink(date) }>
-            <Icon name="add"/>
+          <Link href={ addEntryLink(logId, date) }>
+            <Icon name="add" />
             New Entry
           </Link>
         </div>
