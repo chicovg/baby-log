@@ -3,14 +3,13 @@ import { Link } from 'react-router-component';
 import { Header, Icon } from 'semantic-ui-react';
 
 import './LogSummaryNavigation.css';
-
-const addLogLink = () => '#/add-log';
+import { createLog } from '../utils/locations';
 
 function LogSummaryNavigation() {
     return (
         <div className="log-summary-nav">
           <Header as="h2">Your logs</Header>
-          <Link href={ addLogLink() }>
+          <Link href={ createLog.link() }>
             <Icon name="add"/>
             Create New Log
           </Link>

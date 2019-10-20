@@ -7,6 +7,7 @@ import {
     FEEDING,
 } from '../utils/constants';
 import getDisplayValue from '../utils/getDisplayValue';
+import { editEntry, deleteEntry } from '../utils/locations';
 
 function getBreastOrBottle({ event, feeding, breast }) {
     if (event !== EVENT.FEEDING) {
@@ -26,14 +27,6 @@ function getDurationOrAmount({ feeding, duration, amount }) {
     return feeding === FEEDING.BREAST
         ? `${ duration } minutes`
         : `${ amount } oz.`;
-}
-
-function editEntryLink(logId, id) {
-    return `#/logs/${ logId }/edit-entry/${ id }`;
-}
-
-function deleteEntryLink(logId, date, id) {
-    return `#/logs/${ logId }/delete-entry/${ date }/${ id }`;
 }
 
 function LogItem({
@@ -69,12 +62,12 @@ function LogItem({
           <Table.Cell>{ getDisplayValue(diaper) }</Table.Cell>
           <Table.Cell>{ mood }</Table.Cell>
           <Table.Cell>
-            <Link href={ editEntryLink(logId, id) }>
+            <Link href={ editEntry.link(logId, id) }>
               <Icon name="edit" />
               Edit
             </Link>
             { " " }
-            <Link href={ deleteEntryLink(logId, date, id) }>
+            <Link href={ deleteEntry.link(logId, date, id) }>
               <Icon name="delete" />
               Delete
             </Link>

@@ -1,35 +1,47 @@
 import { compose } from 'redux';
 
-export const selectLogsQueryStatus = userId => state =>
-    state.firestore.status.requested[`users/${userId}/logs`];
+const objectToArray = obj =>
+      Object.keys(obj)
+      .filter(key => obj[key])
+      .map(key => ({
+          id: key,
+          ...obj[key],
+      }));
 
-export const selectEntriesQueryStatus = (userId, logId) => state =>
-    state.firestore.status.requested[`users/${userId}/logs/${logId}/entries`];
+export const selectDataRequested = query => state =>
+    state.firestore.status.requested[query];
+
+export const selectAuth = state => state.firebase.auth;
 
 export const selectUserId = state => state.firebase.auth.uid;
-
 
 const selectUsers = state => state.firestore.data.users || {};
 
 const selectUser = userId => users => users[userId] || {};
 
-const selectLogs = ({logs = {}}) => {
-    return Object.keys(logs)
-        .map(id => ({
-            id,
-            ...logs[id],
-        }));
-};
+const selectLogsObj = ({logs = {}}) => logs || {};
 
 export const selectUserLogs = userId => compose(
-    selectLogs,
+    objectToArray,
+    selectLogsObj,
     selectUser(userId),
     selectUsers,
 );
 
-const selectLog = logId => ({logs = {}}) => {
-    return logs[logId];
-};
+const selectLog = logId => (logs = {}) => logs[logId];
+
+export const selectUserLog = (userId, logId) => compose(
+    selectLog(logId),
+    selectLogsObj,
+    selectUser(userId),
+    selectUsers,
+);
+
+const selectLogEnriesObj = ({entries}) => entries || {};
+
+const filterByLogId = logId => (entries = []) => entries.filter(entry => entry.logId === logId);
+
+const filterByDate = date => (entries = []) => entries.filter(entry => entry.date === date);
 
 const timeComparator = (e1, e2) => {
     if (e1.time < e2.time) {
@@ -41,24 +53,46 @@ const timeComparator = (e1, e2) => {
     return 0;
 };
 
-const selectLogEntries = date => (log = {}) => {
-    const entries = log.entries || {};
+const sortByDate = date => (entries = []) => {
+    entries.sort(timeComparator);
 
-    let entriesArray = Object.keys(entries)
-        .map(key => ({
-            id: key,
-            ...entries[key],
-        }))
-        .filter(entry => entry.date === date);
-
-    entriesArray.sort(timeComparator);
-
-    return entriesArray;
+    return entries;
 };
 
 export const selectUserLogEntries = (userId, logId, date) => compose(
-    selectLogEntries(date),
-    selectLog(logId),
+    sortByDate(date),
+    filterByDate(date),
+    filterByLogId(logId),
+    objectToArray,
+    selectLogEnriesObj,
+    selectUser(userId),
+    selectUsers,
+);
+
+const lastEntryDate = (lastDate, { date }) => {
+    if (!lastDate || date > lastDate) {
+        return date;
+    }
+
+    return lastDate;
+};
+
+const selectLastLogDate = (entries = []) => entries.reduce(lastEntryDate, null);
+
+export const selectLastUserLogDate = (userId, logId) => compose(
+    selectLastLogDate,
+    filterByLogId(logId),
+    objectToArray,
+    selectLogEnriesObj,
+    selectUser(userId),
+    selectUsers,
+);
+
+const selectEntry = id => (entries = {}) => entries[id];
+
+export const selectUserLogEntry = (userId, logId, id) => compose(
+    selectEntry(id),
+    selectLogEnriesObj,
     selectUser(userId),
     selectUsers,
 );

@@ -15,6 +15,7 @@ function Amount({ isBottle, amount, handleChange }) {
           type='number'
           min={0}
           max={64}
+          value={ amount }
           width='six'
         />
     );

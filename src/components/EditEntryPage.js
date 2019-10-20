@@ -4,21 +4,11 @@ import { useSelector } from 'react-redux';
 import { useFirestore } from 'react-redux-firebase';
 
 import LogEntryForm from './LogEntryForm';
+import { selectUserLogEntry } from '../redux/selectors';
 
-const selectLogEntry = id => state => {
-    const userId = state.firebase.auth.uid;
-    const users = state.firestore.data.users;
-
-    if (!users) {
-        return null;
-    }
-
-    return users[userId].entries[id];
-};
-
-function EditEntryPage({ logId, id }) {
+const EditEntryPage = ({ logId, id }) => {
     const userId = useSelector(state => state.firebase.auth.uid);
-    const entry = useSelector(selectLogEntry(id));
+    const entry = useSelector(selectUserLogEntry(userId, logId, id));
     const firestore = useFirestore();
 
     const saveEntry = entryToSave => firestore
@@ -40,6 +30,6 @@ function EditEntryPage({ logId, id }) {
           />
         </Container>
     );
-}
+};
 
 export default EditEntryPage;

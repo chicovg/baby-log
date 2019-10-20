@@ -13,6 +13,7 @@ import Time from './inputs/Time';
 
 import { EVENT, FEEDING } from '../utils/constants';
 import { currentTime } from '../utils/dates';
+import { goTo, viewEntriesForDate } from '../utils/locations';
 
 const initialState = {
     date: '',
@@ -56,7 +57,7 @@ const handleEntryChange = (entry, setEntry) => (e, { name, value }) => {
 
 const handleEntrySubmit = (logId, entry, saveEntry) => () => {
     return saveEntry(entry)
-        .then(() => window.location.hash = `/logs/${logId}/entries/${entry.date}`);
+        .then(() => goTo(viewEntriesForDate.link(logId, entry.date)));
 };
 
 function LogEntryForm({
@@ -69,6 +70,7 @@ function LogEntryForm({
 
     useEffect(() => {
         setEntryState({
+            date: dateProp,
             time: currentTime(),
             ...entryProp,
         });
@@ -143,11 +145,17 @@ function LogEntryForm({
           />
           <Button
             disabled={ !submitEnabled }
+            primary
             type='submit'
           >
             Submit
           </Button>
-          {/* <pre>{ JSON.stringify(entryState, null, 2) }</pre> */}
+          <Button
+            type='button'
+            onClick={ () => window.history.back() }
+          >
+            Cancel
+          </Button>
         </Form>
     );
 }
