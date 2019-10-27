@@ -3,21 +3,20 @@ import { useSelector } from 'react-redux';
 import { useFirestore } from 'react-redux-firebase';
 
 import { Container, Form, Message } from 'semantic-ui-react';
+import { goTo, viewEntriesForDate } from '../utils/locations';
 
 function DeleteEntryPage({ logId, date, id }) {
     const userId = useSelector(state => state.firebase.auth.uid);
     const firestore = useFirestore();
-    const entriesHash = `/logs/${logId}/entries/${ date }`;
+
+    const goToViewEntries = () => goTo(viewEntriesForDate.link(logId, date));
     const deleteEntry = () => firestore
           .collection('users')
           .doc(userId)
-          .collection('logs')
-          .doc(logId)
           .collection('entries')
           .doc(id)
           .delete()
-          .then(() => window.location.hash = entriesHash);
-    const cancel = () => window.location.hash = entriesHash;
+          .then(goToViewEntries);
 
     return (
         <Container>
@@ -33,7 +32,7 @@ function DeleteEntryPage({ logId, date, id }) {
               >
                 Confirm
               </Form.Button>
-              <Form.Button onClick={ cancel }>
+              <Form.Button onClick={ goToViewEntries }>
                 Cancel
               </Form.Button>
             </Form.Group>
