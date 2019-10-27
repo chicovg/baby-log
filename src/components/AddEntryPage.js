@@ -5,7 +5,6 @@ import { useFirestore } from 'react-redux-firebase';
 
 import LogEntryForm from './LogEntryForm';
 import { selectUserId } from '../redux/selectors';
-import { goTo, viewEntriesForDate } from '../utils/locations';
 
 function AddEntryPage({ logId, date }) {
     const userId = useSelector(selectUserId);
