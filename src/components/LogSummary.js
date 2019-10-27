@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import { selectLastUserLogDate, selectUserLogEntries, selectUserId } from '../redux/selectors';
 import { EVENT } from '../utils/constants';
 import { currentDateKey, previousDateKey, toShortDisplayDate } from '../utils/dates';
-import { logEntriesById } from '../firestore/queries';
 import { editLog, deleteLog, goTo, viewEntries } from '../utils/locations';
 import './LogSummary.css';
 
