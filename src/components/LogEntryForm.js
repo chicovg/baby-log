@@ -12,7 +12,7 @@ import Mood from './inputs/Mood';
 import Time from './inputs/Time';
 
 import { EVENT, FEEDING } from '../utils/constants';
-import { currentTime } from '../utils/dates';
+import { currentTime, toTimeKey } from '../utils/dates';
 import { goTo, viewEntriesForDate } from '../utils/locations';
 
 const initialState = {
@@ -56,7 +56,10 @@ const handleEntryChange = (entry, setEntry) => (e, { name, value }) => {
 };
 
 const handleEntrySubmit = (logId, entry, saveEntry) => () => {
-    return saveEntry(entry)
+    return saveEntry({
+        ...entry,
+        time: toTimeKey(entry.date)(entry.time)
+    })
         .then(() => goTo(viewEntriesForDate.link(logId, entry.date)));
 };
 

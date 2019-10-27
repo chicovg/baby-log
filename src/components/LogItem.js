@@ -52,9 +52,11 @@ function LogItem({
         amount,
     });
 
+    const toDisplayTimeForDate = toDisplayTime(date);
+
     return (
         <Table.Row key={ id }>
-          <Table.Cell>{ toDisplayTime(date, time) }</Table.Cell>
+          <Table.Cell>{ toDisplayTimeForDate(time) }</Table.Cell>
           <Table.Cell>{ breastOrBottle }</Table.Cell>
           <Table.Cell>{ durationOrAmount }</Table.Cell>
           <Table.Cell>{ getDisplayValue(diaper) }</Table.Cell>

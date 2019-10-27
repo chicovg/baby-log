@@ -14,8 +14,6 @@ const EditEntryPage = ({ logId, id }) => {
     const saveEntry = entryToSave => firestore
           .collection('users')
           .doc(userId)
-          .collection('logs')
-          .doc(logId)
           .collection('entries')
           .doc(id)
           .set(entryToSave);
