@@ -26,6 +26,8 @@ const EditEntryPage = ({ logId, id }) => {
           <LogEntryForm
             date={ entry ? entry.date : '' }
             entry={ entry || { userId } }
+            logId={ logId }
+            isUpdate
             saveEntry={ saveEntry }
           />
         </Container>

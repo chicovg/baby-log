@@ -26,6 +26,7 @@ function AddEntryPage({ logId, date }) {
           <LogEntryForm
             date={ date }
             entry={ entry }
+            logId={ logId }
             isUpdate={ false }
             saveEntry={ saveEntry }
           />

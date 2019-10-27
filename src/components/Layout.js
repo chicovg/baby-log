@@ -16,7 +16,7 @@ function Layout() {
     if (isLoaded(auth) && isEmpty(auth)) {
         firebase.login({
             provider: 'google',
-            type: 'popup',
+            type: 'redirect',
         });
     }
 
