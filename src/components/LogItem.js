@@ -2,11 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-component';
 import { Icon, Table } from 'semantic-ui-react';
 
-import {
-    EVENT,
-    FEEDING,
-} from '../utils/constants';
+import { EVENT, FEEDING } from '../utils/constants';
 import getDisplayValue from '../utils/getDisplayValue';
+import { toDisplayTime } from '../utils/dates';
 import { editEntry, deleteEntry } from '../utils/locations';
 
 function getBreastOrBottle({ event, feeding, breast }) {
@@ -56,7 +54,7 @@ function LogItem({
 
     return (
         <Table.Row key={ id }>
-          <Table.Cell>{ time }</Table.Cell>
+          <Table.Cell>{ toDisplayTime(date, time) }</Table.Cell>
           <Table.Cell>{ breastOrBottle }</Table.Cell>
           <Table.Cell>{ durationOrAmount }</Table.Cell>
           <Table.Cell>{ getDisplayValue(diaper) }</Table.Cell>

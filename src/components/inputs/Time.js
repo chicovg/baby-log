@@ -7,6 +7,7 @@ function Time({ time, handleChange }) {
           name='time'
           onChange={ handleChange }
           placeholder='Time'
+          timeFormat='AMPM'
           value={ time }
           width='six'
         />

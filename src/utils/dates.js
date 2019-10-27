@@ -3,9 +3,11 @@ import moment from 'moment';
 export const DATE_KEY_FORMAT = "YYYY-MM-DD";
 const DATE_DISPLAY_FORMAT = "dddd MMMM Do YYYY";
 const SHORT_DATE_DISPLAY_FORMAT = "dddd MMM Do";
-const TIME_FORMAT = "HH:mm";
+const TIME_FORMAT = "LT";
 
 export const toDisplayDate = (dateKey) => moment(dateKey).format(DATE_DISPLAY_FORMAT);
+
+export const toDisplayTime = (dateKey, timeValue) => moment(`${dateKey} ${timeValue}`).format(TIME_FORMAT);
 
 export const toShortDisplayDate = dateKey => moment(dateKey).format(SHORT_DATE_DISPLAY_FORMAT);
 

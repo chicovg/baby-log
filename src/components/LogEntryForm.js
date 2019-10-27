@@ -156,6 +156,7 @@ function LogEntryForm({
           >
             Cancel
           </Button>
+          <pre>{JSON.stringify(entryState, null, 2)}</pre>
         </Form>
     );
 }

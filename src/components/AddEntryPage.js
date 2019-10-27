@@ -5,20 +5,18 @@ import { useFirestore } from 'react-redux-firebase';
 
 import LogEntryForm from './LogEntryForm';
 import { selectUserId } from '../redux/selectors';
+import { goTo, viewEntriesForDate } from '../utils/locations';
 
 function AddEntryPage({ logId, date }) {
     const userId = useSelector(selectUserId);
-    const entry = { userId, date };
+    const entry = { date, logId, userId };
     const firestore = useFirestore();
 
     const saveEntry = entryToSave => firestore
           .collection('users')
           .doc(userId)
           .collection('entries')
-          .add({
-              logId,
-              ...entryToSave,
-          });
+          .add({ ...entryToSave });
 
     return (
         <Container>
