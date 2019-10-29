@@ -19,7 +19,6 @@ import { goTo, viewEntriesForDate } from '../utils/locations';
 const initialState = {
     date: '',
     time: '',
-    mood: '',
     event: '',
     feeding: '',
     breast: '',
