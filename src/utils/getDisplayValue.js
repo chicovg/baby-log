@@ -11,4 +11,5 @@ export default (constant) => ({
     [BREAST.RIGHT]: 'Right',
     [DIAPER.DIRTY]: 'Dirty',
     [DIAPER.WET]: 'Wet',
+    [DIAPER.BOTH]: 'Both',
 })[constant] || '';

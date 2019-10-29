@@ -142,10 +142,12 @@ function LogEntryForm({
             handleChange={ handleChange }
           />
           <Form.Group>
-            {/* <Mood */}
-            {/*   mood={ mood } */}
-            {/*   handleChange={ handleChange } */}
-            {/* /> */}
+            <Mood
+              mood={ mood }
+              handleChange={ handleChange }
+            />
+          </Form.Group>
+          <Form.Group>
             <Notes
               notes={ notes }
               handleChange={ handleChange }

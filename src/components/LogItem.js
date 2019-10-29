@@ -61,7 +61,7 @@ function LogItem({
           <Table.Cell>{ breastOrBottle }</Table.Cell>
           <Table.Cell>{ durationOrAmount }</Table.Cell>
           <Table.Cell>{ getDisplayValue(diaper) }</Table.Cell>
-          {/* <Table.Cell>{ mood }</Table.Cell> */}
+          <Table.Cell>{ mood }</Table.Cell>
           <Table.Cell>{ notes }</Table.Cell>
           <Table.Cell>
             <Link href={ editEntry.link(logId, id) }>

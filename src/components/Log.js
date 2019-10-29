@@ -15,7 +15,7 @@ function Log({ logEntries, logId }) {
     );
 
     return (
-      <Table celled>
+      <Table celled striped>
         <Table.Header>
           <LogTitle />
         </Table.Header>
