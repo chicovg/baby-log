@@ -14,7 +14,7 @@ function Duration({ isBreastFeeding, duration, handleChange }) {
           name='duration'
           min={0}
           max={60}
-          step={5}
+          step={1}
           type='number'
           value={ duration }
           width='six'
