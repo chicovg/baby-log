@@ -9,12 +9,10 @@ function Amount({ isBottle, amount, handleChange }) {
     return (
         <Form.Input
           control={ Input }
-          label='Amount (oz)'
+          label='Amount'
           onChange={ handleChange }
           name='amount'
-          type='number'
-          min={0}
-          max={64}
+          type='text'
           value={ amount }
           width='six'
         />

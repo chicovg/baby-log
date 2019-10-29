@@ -24,7 +24,7 @@ function getDurationOrAmount({ feeding, duration, amount }) {
 
     return feeding === FEEDING.BREAST
         ? `${ duration } minutes`
-        : `${ amount } oz.`;
+        : `${ amount }`;
 }
 
 function LogItem({
