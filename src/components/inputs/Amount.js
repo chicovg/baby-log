@@ -1,15 +1,17 @@
 import React from 'react';
 import { Form, Input } from 'semantic-ui-react';
 
-function Amount({ isBottle, amount, handleChange }) {
-    if (!isBottle) {
+import { FEEDING } from '../../utils/constants';
+
+function Amount({ amount, feeding, handleChange }) {
+    if (feeding != FEEDING.BOTTLE && feeding != FEEDING.EXPRESSION) {
         return null;
     }
 
     return (
         <Form.Input
           control={ Input }
-          label='Amount'
+          label='Amount (including unit)'
           onChange={ handleChange }
           name='amount'
           type='text'

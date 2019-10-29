@@ -6,6 +6,7 @@ export const EVENT = {
 export const FEEDING = {
     BREAST: 'r',
     BOTTLE: 'o',
+    EXPRESSION: 'e',
 };
 
 export const BREAST = {

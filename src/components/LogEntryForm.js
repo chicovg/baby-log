@@ -132,7 +132,7 @@ function LogEntryForm({
           />
           <Amount
             amount={ amount }
-            isBottle={ feeding === FEEDING.BOTTLE }
+            feeding={ feeding }
             handleChange={ handleChange }
           />
           <Diaper

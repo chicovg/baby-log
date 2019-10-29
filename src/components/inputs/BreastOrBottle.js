@@ -14,16 +14,23 @@ function BreastOrBottle({ feeding, isFeeding, handleChange }) {
           <Form.Radio
             label='Breast'
             name='feeding'
-            value={FEEDING.BREAST}
-            checked={feeding === FEEDING.BREAST}
-            onChange={handleChange}
+            value={ FEEDING.BREAST }
+            checked={ feeding === FEEDING.BREAST }
+            onChange={ handleChange }
           />
           <Form.Radio
             label='Bottle'
             name='feeding'
-            value={FEEDING.BOTTLE}
-            checked={feeding === FEEDING.BOTTLE}
-            onChange={handleChange}
+            value={ FEEDING.BOTTLE }
+            checked={ feeding === FEEDING.BOTTLE }
+            onChange={ handleChange }
+          />
+          <Form.Radio
+            label='Expression'
+            name='feeding'
+            value={ FEEDING.EXPRESSION }
+            checked={ feeding === FEEDING.EXPRESSION }
+            onChange={ handleChange }
           />
         </Form.Group>
     );

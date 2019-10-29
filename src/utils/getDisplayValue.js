@@ -6,6 +6,7 @@ import {
 
 export default (constant) => ({
     [FEEDING.BOTTLE]: 'Bottle',
+    [FEEDING.EXPRESSION]: 'Expression',
     [BREAST.BOTH]: 'Left/Right',
     [BREAST.LEFT]: 'Left',
     [BREAST.RIGHT]: 'Right',
