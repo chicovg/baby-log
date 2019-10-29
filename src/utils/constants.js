@@ -17,4 +17,5 @@ export const BREAST = {
 export const DIAPER = {
     DIRTY: 'd',
     WET: 'w',
+    BOTH: 't',
 };

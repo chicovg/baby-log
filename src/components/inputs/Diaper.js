@@ -25,6 +25,13 @@ function Diaper({ isDiaper, diaper, handleChange }) {
             checked={ diaper === DIAPER.WET }
             onChange={ handleChange }
           />
+          <Form.Radio
+            label='Both'
+            name='diaper'
+            value={ DIAPER.BOTH }
+            checked={ diaper === DIAPER.BOTH }
+            onChange={ handleChange }
+          />
         </Form.Group>
     );
 }

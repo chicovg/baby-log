@@ -10,6 +10,7 @@ function Mood({ mood, handleChange }) {
           name='mood'
           type='text'
           onChange={ handleChange }
+          value={ mood }
           width='six'
         />
     );

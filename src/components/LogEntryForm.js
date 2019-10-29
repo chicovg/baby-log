@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 
 import Amount from './inputs/Amount';
@@ -9,6 +9,7 @@ import Diaper from './inputs/Diaper';
 import Duration from './inputs/Duration';
 import FeedingOrDiaper from './inputs/FeedingOrDiaper';
 import Mood from './inputs/Mood';
+import Notes from './inputs/Notes';
 import Time from './inputs/Time';
 
 import { EVENT, FEEDING } from '../utils/constants';
@@ -25,6 +26,8 @@ const initialState = {
     duration: '',
     amount: '',
     diaper: '',
+    mood: '',
+    notes: '',
     userId: '',
 };
 
@@ -69,15 +72,12 @@ function LogEntryForm({
     entry: entryProp,
     saveEntry,
 }) {
-    const [entryState, setEntryState] = useState(initialState);
-
-    useEffect(() => {
-        setEntryState({
-            date: dateProp,
-            time: currentTime(),
-            ...entryProp,
-        });
-    }, [dateProp, entryProp]);
+    const [entryState, setEntryState] = useState({
+        ...initialState,
+        date: dateProp,
+        time: currentTime(),
+        ...entryProp,
+    });
 
     const handleChange = handleEntryChange(entryState, setEntryState);
     const handleSubmit = handleEntrySubmit(logId, entryState, saveEntry);
@@ -92,6 +92,7 @@ function LogEntryForm({
         amount,
         diaper,
         mood,
+        notes,
     } = entryState;
     const eventPopulated = date && time && event;
     const breastFeedingPopulated = feeding && breast && duration;
@@ -108,12 +109,6 @@ function LogEntryForm({
             />
             <Time
               time={ time }
-              handleChange={ handleChange }
-            />
-          </Form.Group>
-          <Form.Group>
-            <Mood
-              mood={ mood }
               handleChange={ handleChange }
             />
           </Form.Group>
@@ -146,6 +141,16 @@ function LogEntryForm({
             isDiaper={ event === EVENT.DIAPER }
             handleChange={ handleChange }
           />
+          <Form.Group>
+            {/* <Mood */}
+            {/*   mood={ mood } */}
+            {/*   handleChange={ handleChange } */}
+            {/* /> */}
+            <Notes
+              notes={ notes }
+              handleChange={ handleChange }
+            />
+          </Form.Group>
           <Button
             disabled={ !submitEnabled }
             primary

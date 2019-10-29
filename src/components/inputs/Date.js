@@ -6,13 +6,13 @@ import { DATE_KEY_FORMAT } from '../../utils/dates';
 function Date({ date, handleChange }) {
     return (
         <DateInput
-        dateFormat={ DATE_KEY_FORMAT }
-        name='date'
-        onChange={ handleChange }
-        placeholder='Date'
-        value={ date }
-        width='six'
-            />
+          dateFormat={ DATE_KEY_FORMAT }
+          name='date'
+          onChange={ handleChange }
+          placeholder='Date'
+          value={ date }
+          width='six'
+        />
     );
 }
 
