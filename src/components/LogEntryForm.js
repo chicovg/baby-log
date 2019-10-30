@@ -13,7 +13,8 @@ import Notes from './inputs/Notes';
 import Time from './inputs/Time';
 
 import { EVENT, FEEDING } from '../utils/constants';
-import { currentTime, toTimeKey } from '../utils/dates';
+import { currentTime } from '../utils/dates';
+import { toDisplayedEntry, toStoredEntry } from '../utils/entries';
 import { goTo, viewEntriesForDate } from '../utils/locations';
 
 const initialState = {
@@ -58,10 +59,7 @@ const handleEntryChange = (entry, setEntry) => (e, { name, value }) => {
 };
 
 const handleEntrySubmit = (logId, entry, saveEntry) => () => {
-    return saveEntry({
-        ...entry,
-        time: toTimeKey(entry.date)(entry.time)
-    })
+    return saveEntry(toStoredEntry(entry))
         .then(() => goTo(viewEntriesForDate.link(logId, entry.date)));
 };
 
@@ -71,12 +69,14 @@ function LogEntryForm({
     entry: entryProp,
     saveEntry,
 }) {
-    const [entryState, setEntryState] = useState({
-        ...initialState,
-        date: dateProp,
-        time: currentTime(),
-        ...entryProp,
-    });
+    const [entryState, setEntryState] = useState(
+        toDisplayedEntry({
+            ...initialState,
+            date: dateProp,
+            time: currentTime(),
+            ...entryProp,
+        })
+    );
 
     const handleChange = handleEntryChange(entryState, setEntryState);
     const handleSubmit = handleEntrySubmit(logId, entryState, saveEntry);

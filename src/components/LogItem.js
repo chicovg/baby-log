@@ -4,7 +4,7 @@ import { Icon, Table } from 'semantic-ui-react';
 
 import { EVENT, FEEDING } from '../utils/constants';
 import getDisplayValue from '../utils/getDisplayValue';
-import { toDisplayTime } from '../utils/dates';
+import { toDisplayedEntry } from '../utils/entries';
 import { editEntry, deleteEntry } from '../utils/locations';
 
 function getBreastOrBottle({ event, feeding, breast }) {
@@ -27,20 +27,22 @@ function getDurationOrAmount({ feeding, duration, amount }) {
         : `${ amount }`;
 }
 
-function LogItem({
-    logId,
-    id,
-    date,
-    time,
-    event,
-    feeding,
-    breast,
-    duration,
-    amount,
-    diaper,
-    mood,
-    notes,
-}) {
+function LogItem(props) {
+    const {
+        amount,
+        breast,
+        date,
+        diaper,
+        duration,
+        event,
+        feeding,
+        id,
+        logId,
+        mood,
+        notes,
+        time,
+    } = toDisplayedEntry(props);
+
     const breastOrBottle = getBreastOrBottle({
         event,
         feeding,
@@ -53,11 +55,9 @@ function LogItem({
         amount,
     });
 
-    const toDisplayTimeForDate = toDisplayTime(date);
-
     return (
         <Table.Row key={ id }>
-          <Table.Cell>{ toDisplayTimeForDate(time) }</Table.Cell>
+          <Table.Cell>{ time }</Table.Cell>
           <Table.Cell>{ breastOrBottle }</Table.Cell>
           <Table.Cell>{ durationOrAmount }</Table.Cell>
           <Table.Cell>{ getDisplayValue(diaper) }</Table.Cell>
