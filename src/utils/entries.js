@@ -7,5 +7,5 @@ export const toDisplayedEntry = entry => ({
 
 export const toStoredEntry = entry => ({
     ...entry,
-    time: toStoredTime(entry.time),
+    time: toStoredTime(entry.date)(entry.time),
 });
