@@ -6,6 +6,7 @@ function Time({ time, handleChange }) {
         <TimeInput
           name='time'
           onChange={ handleChange }
+          label='Time'
           placeholder='Time'
           timeFormat='AMPM'
           value={ time }

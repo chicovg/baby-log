@@ -9,6 +9,7 @@ function Date({ date, handleChange }) {
           dateFormat={ DATE_KEY_FORMAT }
           name='date'
           onChange={ handleChange }
+          label='Date'
           placeholder='Date'
           value={ date }
           width='six'

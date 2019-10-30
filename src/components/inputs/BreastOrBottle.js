@@ -9,7 +9,7 @@ function BreastOrBottle({ feeding, isFeeding, handleChange }) {
     }
 
     return (
-        <Form.Group inline>
+        <Form.Group grouped>
           <label>Breast or Bottle?</label>
           <Form.Radio
             label='Breast'

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Divider, Form } from 'semantic-ui-react';
 
 import Amount from './inputs/Amount';
 import Breast from './inputs/Breast';
@@ -140,18 +140,15 @@ function LogEntryForm({
             isDiaper={ event === EVENT.DIAPER }
             handleChange={ handleChange }
           />
-          <Form.Group>
-            <Mood
-              mood={ mood }
-              handleChange={ handleChange }
-            />
-          </Form.Group>
-          <Form.Group>
-            <Notes
-              notes={ notes }
-              handleChange={ handleChange }
-            />
-          </Form.Group>
+          <Mood
+            mood={ mood }
+            handleChange={ handleChange }
+          />
+          <Notes
+            notes={ notes }
+            handleChange={ handleChange }
+          />
+          <Divider hidden />
           <Button
             disabled={ !submitEnabled }
             primary

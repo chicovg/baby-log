@@ -9,7 +9,7 @@ function Diaper({ isDiaper, diaper, handleChange }) {
     }
 
     return (
-        <Form.Group inline>
+        <Form.Group grouped>
           <label>Diaper</label>
           <Form.Radio
             label='Dirty'

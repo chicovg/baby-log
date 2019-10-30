@@ -9,7 +9,7 @@ function Breast({ isBreastFeeding, breast, duration, handleChange }) {
     }
 
     return (
-        <Form.Group inline>
+        <Form.Group grouped>
           <label>Left, Right, or Both?</label>
           <Form.Radio
             label='Left'

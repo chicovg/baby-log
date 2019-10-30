@@ -5,7 +5,7 @@ import { EVENT } from '../../utils/constants';
 
 function FeedingOrDiaper({ event, handleChange }) {
     return (
-        <Form.Group inline>
+        <Form.Group grouped>
           <label>Feeding or Diaper?</label>
           <Form.Radio
             label='Feeding'
