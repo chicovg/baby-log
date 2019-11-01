@@ -1,4 +1,17 @@
+# Baby Log
+
+## About
+
+A React App for keeping track of a new born's feedings and diapers during the first few weeks of life.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+The app stores data in [Firebase](https://firebase.google.com/).
+
+It uses the following frameworks:
+  - [Semantic UI React](https://react.semantic-ui.com/)
+  - [/arfedulov/semantic-ui-calendar-react](https://github.com/arfedulov/semantic-ui-calendar-react)
+  - [React Redux Firebase](http://react-redux-firebase.com/)
 
 ## Available Scripts
 
