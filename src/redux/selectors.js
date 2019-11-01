@@ -1,6 +1,6 @@
 import { compose } from 'redux';
 
-const objectToArray = obj =>
+export const objectToArray = obj =>
       Object.keys(obj)
       .filter(key => obj[key])
       .map(key => ({
