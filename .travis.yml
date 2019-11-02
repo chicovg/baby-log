@@ -1,9 +1,14 @@
 language: node_js
 node_js:
-  - 8
+- 8
 cache:
   directories:
-    - node_modules
+  - node_modules
 script:
-  - npm run build
-  - npm test
+- npm run build
+- npm test
+deploy:
+  provider: firebase
+  token:
+    secure: m06G5ZWUvI42DTstFk3e64LD+65rLmUKgrL5ryRFp4F2wuAocWR9NSZhGY07Qqj+hH51Vr8YWAyYjwXVySo+3Y3GaZldvl3TKhFSX9pTM4DeM9ccy4aZ11NxN2TFHM6lr47UKeR8B9BW35XxnPzvkarhB51/9j/+k7q/8/VozitfxWUjVup9zIOejqhBOTSMQ6E+OMl2CB6M40OKacs3l6ybbb3sYrrLxisH6ZvPpRFqL9LVFvHBmpApiHlvI3Je8cIo4nsikihfS8g4BgnUkmUU5dhnIbPsPJcRboNOL5MOoud5FfFrPTeoT8tAhhVClpWfaa0Hv9PAhqR1TLCCnfrOu5VXMcsVI9JH/4insAmQ+2ZxDCIil/2CKukfxKirXyNwzW/WAZPv2Hxlm+6BsKjUGyWf/0ETzetYqJVjZVkWSZ7Md6H1F3uK6DmFxZtgQpIIlSWIKQ1lkaB/gLqKGDFi86OGp9CiNppToLpAzFX9pE7Zf8kANuj6vzGviRu64Z0XLHC05PbB0Qos5mPt+LQudv45fWP6mfIHM4apwEEAoEwX5YgTsJGiPpA/FwalEd1u1gMlpWuM1COvIBBwZXtdp5z2vmG7mXHzcvS7y9xWRMWXaZh/EUf8KXysIPejAZtBDVICheHUc8z7ol8AwdM/lc6+RpO4CL0upgvEPcY=
+  project: baby-log

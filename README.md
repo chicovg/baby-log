@@ -2,7 +2,7 @@
 
 ## About
 
-A React App for keeping track of a new born's feedings and diapers during the first few weeks of life.
+A React App for keeping track of a newborn's feedings and diapers during the first few weeks of life.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
