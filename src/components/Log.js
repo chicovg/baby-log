@@ -1,10 +1,15 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
+import {
+    Table
+} from 'semantic-ui-react';
 
 import LogItem from './LogItem';
 import LogTitle from './LogTitle';
 
-function Log({ logEntries, logId }) {
+function Log({
+    logEntries,
+    logId
+}) {
     const logItems = logEntries.map(
         entry =>
             <LogItem
@@ -15,7 +20,7 @@ function Log({ logEntries, logId }) {
     );
 
     return (
-      <Table celled striped>
+        <Table celled striped>
         <Table.Header>
           <LogTitle />
         </Table.Header>

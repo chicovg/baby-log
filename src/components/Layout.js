@@ -1,14 +1,28 @@
-import React, { Fragment } from 'react';
-import { Divider } from 'semantic-ui-react';
-import { useSelector } from 'react-redux';
-import { isLoaded, isEmpty, useFirebase, useFirestoreConnect } from 'react-redux-firebase';
+import React, {
+    Fragment
+} from 'react';
+import {
+    Divider
+} from 'semantic-ui-react';
+import {
+    useSelector
+} from 'react-redux';
+import {
+    isLoaded,
+    isEmpty,
+    useFirebase,
+    useFirestoreConnect
+} from 'react-redux-firebase';
 
 import AppHeader from './AppHeader';
 import AppLoader from './AppLoader';
 import AppLocations from './AppLocations';
-import { selectAuth, selectDataRequested } from '../redux/selectors';
+import {
+    selectAuth,
+    selectDataRequested
+} from '../redux/selectors';
 
-function Layout() {
+const Layout = () => {
     const firebase = useFirebase();
     const auth = useSelector(selectAuth);
     const userId = auth.uid;
@@ -43,6 +57,6 @@ function Layout() {
           <AppLocations isLoaded={ loaded } />
         </Fragment>
     );
-}
+};
 
 export default Layout;
