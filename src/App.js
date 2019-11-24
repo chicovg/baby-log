@@ -4,7 +4,8 @@ import './App.css';
 
 import Layout from './components/Layout';
 
-export default () =>
+export default () => (
     <div className="App-main">
-      <Layout />
+        <Layout />
     </div>
+);

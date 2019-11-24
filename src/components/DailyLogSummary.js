@@ -1,9 +1,12 @@
 import React from 'react';
 import {Card, Table} from 'semantic-ui-react';
+import {Link} from 'react-router-component';
 import {toSummaryDisplayDate} from '../utils/dates';
+import {viewEntriesForDate} from '../utils/locations';
 
-export default ({summaries}) => (
+export default ({logId, summaries}) => (
     <Card.Content extra>
+        <Card.Header>Recent History</Card.Header>
         <Table compact="very" striped>
             <Table.Header>
                 <Table.Row>
@@ -15,7 +18,11 @@ export default ({summaries}) => (
             <Table.Body>
                 {summaries.map(({id, diapers, feedings}) => (
                     <Table.Row id={id}>
-                        <Table.Cell>{toSummaryDisplayDate(id)}</Table.Cell>
+                        <Table.Cell>
+                            <Link href={viewEntriesForDate.link(logId, id)}>
+                                {toSummaryDisplayDate(id)}
+                            </Link>
+                        </Table.Cell>
                         <Table.Cell>{diapers}</Table.Cell>
                         <Table.Cell>{feedings}</Table.Cell>
                     </Table.Row>

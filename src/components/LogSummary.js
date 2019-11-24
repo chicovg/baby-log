@@ -15,7 +15,7 @@ const getLastDateInfo = lastDate => ({
     lastWasYesterday: previousDateKey(currentDateKey()) === lastDate
 });
 
-const LogSummary = ({id, babyName, title}) => {
+const LogSummary = ({id, title}) => {
     const userId = useSelector(selectUserId);
     const lastDate = useSelector(selectLastUserLogDate(userId, id));
     const dailySummaries = useSelector(selectUserLogSummaries(userId, id));
@@ -24,7 +24,7 @@ const LogSummary = ({id, babyName, title}) => {
     return (
         <Card>
             <LogSummaryHeader lastDateInfo={lastDateInfo} title={title} />
-            <DailyLogSummary summaries={dailySummaries} />
+            <DailyLogSummary logId={id} summaries={dailySummaries} />
             <LogSummaryActions logId={id} />
         </Card>
     );
