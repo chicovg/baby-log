@@ -23,8 +23,8 @@ export default ({logId, summaries}) => (
                                 {toSummaryDisplayDate(id)}
                             </Link>
                         </Table.Cell>
-                        <Table.Cell>{diapers}</Table.Cell>
                         <Table.Cell>{feedings}</Table.Cell>
+                        <Table.Cell>{diapers}</Table.Cell>
                     </Table.Row>
                 ))}
             </Table.Body>
