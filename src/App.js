@@ -4,12 +4,7 @@ import './App.css';
 
 import Layout from './components/Layout';
 
-function App () {
-    return (
-        <div className="App-main">
-          <Layout />
-        </div>
-    );
-}
-
-export default App;
+export default () =>
+    <div className="App-main">
+      <Layout />
+    </div>

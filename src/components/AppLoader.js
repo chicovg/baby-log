@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimmer, Loader } from 'semantic-ui-react';
+import {Dimmer, Loader} from 'semantic-ui-react';
 
 function getLoaderMessage(isSignedIn) {
     if (!isSignedIn) {
@@ -9,8 +9,7 @@ function getLoaderMessage(isSignedIn) {
     return 'Loading...';
 }
 
-function AppLoader({ isSignedIn, isLoading }) {
-
+function AppLoader({isSignedIn, isLoading}) {
     if (!isLoading) {
         return null;
     }
@@ -19,7 +18,7 @@ function AppLoader({ isSignedIn, isLoading }) {
 
     return (
         <Dimmer active>
-          <Loader>{ loaderMessage }</Loader>
+            <Loader>{loaderMessage}</Loader>
         </Dimmer>
     );
 }

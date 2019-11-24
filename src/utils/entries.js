@@ -1,4 +1,4 @@
-import { toDisplayDate, toDisplayTime, toStoredTime } from '../utils/dates';
+import {toDisplayDate, toDisplayTime, toStoredTime} from '../utils/dates';
 
 export const toDisplayedEntry = entry => ({
     ...entry,
@@ -7,5 +7,5 @@ export const toDisplayedEntry = entry => ({
 
 export const toStoredEntry = entry => ({
     ...entry,
-    time: toStoredTime(toDisplayDate(entry.date))(entry.time),
+    time: toStoredTime(toDisplayDate(entry.date))(entry.time)
 });

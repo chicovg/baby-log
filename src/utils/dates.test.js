@@ -10,7 +10,7 @@ import {
     toDisplayDate,
     toDisplayTime,
     toShortDisplayDate,
-    toStoredTime,
+    toStoredTime
 } from './dates';
 
 describe.each`
@@ -39,7 +39,7 @@ describe.each`
     timeKey    | expected
     ${'0:00'}  | ${'12:00 AM'}
     ${'00:00'} | ${'12:00 AM'}
-    ${'09:34'}  | ${'9:34 AM'}
+    ${'09:34'} | ${'9:34 AM'}
     ${'15:58'} | ${'3:58 PM'}
     ${'23:59'} | ${'11:59 PM'}
 `('toDisplayTime($timeKey)', ({timeKey, expected}) => {

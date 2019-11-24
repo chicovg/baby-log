@@ -1,19 +1,10 @@
 import React from 'react';
-import {
-    Card
-} from 'semantic-ui-react';
-import {
-    toShortDisplayDate
-} from '../utils/dates';
+import {Card} from 'semantic-ui-react';
+import {toShortDisplayDate} from '../utils/dates';
 
-
-const getLogMetaInfo = ({
-    lastDate,
-    lastWasToday,
-    lastWasYesterday
-}) => {
+const getLogMetaInfo = ({lastDate, lastWasToday, lastWasYesterday}) => {
     if (!lastDate) {
-        return 'You haven\'t logged yet';
+        return "You haven't logged yet";
     }
 
     if (lastWasToday) {
@@ -27,11 +18,11 @@ const getLogMetaInfo = ({
     return `The last entry was on ${toShortDisplayDate(lastDate)}`;
 };
 
-export default ({ lastDateInfo, title }) => {
+export default ({lastDateInfo, title}) => {
     return (
         <Card.Content>
-          <Card.Header>{ title }</Card.Header>
-          <Card.Meta>{ getLogMetaInfo(lastDateInfo) }</Card.Meta>
+            <Card.Header>{title}</Card.Header>
+            <Card.Meta>{getLogMetaInfo(lastDateInfo)}</Card.Meta>
         </Card.Content>
     );
 };
