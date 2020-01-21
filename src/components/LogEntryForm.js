@@ -3,11 +3,11 @@ import {Button, Divider, Form} from 'semantic-ui-react';
 
 import Amount from './inputs/Amount';
 import Breast from './inputs/Breast';
-import BreastOrBottle from './inputs/BreastOrBottle';
 import Date from './inputs/Date';
 import Diaper from './inputs/Diaper';
 import Duration from './inputs/Duration';
-import FeedingOrDiaper from './inputs/FeedingOrDiaper';
+import Event from './inputs/Event';
+import Feeding from './inputs/Feeding';
 import Mood from './inputs/Mood';
 import Notes from './inputs/Notes';
 import Time from './inputs/Time';
@@ -28,7 +28,7 @@ const initialState = {
     diaper: '',
     mood: '',
     notes: '',
-    userId: ''
+    userId: '',
 };
 
 const handleEntryChange = (entry, setEntry) => (e, {name, value}) => {
@@ -40,7 +40,7 @@ const handleEntryChange = (entry, setEntry) => (e, {name, value}) => {
             breast: '',
             duration: '',
             amount: '',
-            diaper: ''
+            diaper: '',
         });
     } else if (name === 'feeding') {
         setEntry({
@@ -48,12 +48,12 @@ const handleEntryChange = (entry, setEntry) => (e, {name, value}) => {
             feeding: value,
             breast: '',
             duration: '',
-            amount: ''
+            amount: '',
         });
     } else {
         setEntry({
             ...entry,
-            [name]: value
+            [name]: value,
         });
     }
 };
@@ -70,19 +70,33 @@ function LogEntryForm({logId, date: dateProp, entry: entryProp, saveEntry}) {
             ...initialState,
             date: dateProp,
             time: currentTime(),
-            ...entryProp
+            ...entryProp,
         })
     );
 
     const handleChange = handleEntryChange(entryState, setEntryState);
     const handleSubmit = handleEntrySubmit(logId, entryState, saveEntry);
 
-    const {date, time, event, feeding, breast, duration, amount, diaper, mood, notes} = entryState;
+    const {
+        date,
+        time,
+        event,
+        feeding,
+        breast,
+        duration,
+        amount,
+        diaper,
+        mood,
+        notes,
+        unit,
+    } = entryState;
     const eventPopulated = date && time && event;
     const breastFeedingPopulated = feeding && breast && duration;
     const bottleFeedingPopulated = feeding && amount;
+    const pumpingPopulated = event === EVENT.PUMPING && amount;
     const submitEnabled =
-        eventPopulated && (breastFeedingPopulated || bottleFeedingPopulated || diaper);
+        eventPopulated &&
+        (breastFeedingPopulated || bottleFeedingPopulated || pumpingPopulated || diaper);
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -90,8 +104,8 @@ function LogEntryForm({logId, date: dateProp, entry: entryProp, saveEntry}) {
                 <Date date={date} handleChange={handleChange} />
                 <Time time={time} handleChange={handleChange} />
             </Form.Group>
-            <FeedingOrDiaper event={event} handleChange={handleChange} />
-            <BreastOrBottle
+            <Event event={event} handleChange={handleChange} />
+            <Feeding
                 feeding={feeding}
                 isFeeding={event === EVENT.FEEDING}
                 handleChange={handleChange}
@@ -106,8 +120,14 @@ function LogEntryForm({logId, date: dateProp, entry: entryProp, saveEntry}) {
                 isBreastFeeding={feeding === FEEDING.BREAST}
                 handleChange={handleChange}
             />
-            <Amount amount={amount} feeding={feeding} handleChange={handleChange} />
-            <Diaper diaper={diaper} isDiaper={event === EVENT.DIAPER} handleChange={handleChange} />
+            <Amount
+                amount={amount}
+                event={event}
+                feeding={feeding}
+                handleChange={handleChange}
+                unit={unit}
+            />
+            <Diaper diaper={diaper} event={event} handleChange={handleChange} />
             <Mood mood={mood} handleChange={handleChange} />
             <Notes notes={notes} handleChange={handleChange} />
             <Divider hidden />

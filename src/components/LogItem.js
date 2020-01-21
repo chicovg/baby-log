@@ -7,55 +7,27 @@ import getDisplayValue from '../utils/getDisplayValue';
 import {toDisplayedEntry} from '../utils/entries';
 import {editEntry, deleteEntry} from '../utils/locations';
 
-function getBreastOrBottle({event, feeding, breast}) {
-    if (event !== EVENT.FEEDING) {
-        return '';
+const getEventDetails = ({amount, breast, duration, event, feeding, unit}) => {
+    switch (event) {
+        case EVENT.FEEDING:
+            return feeding === FEEDING.BREAST
+                ? `${getDisplayValue(breast)} breast, ${duration} minutes`
+                : `${getDisplayValue(feeding)}, ${amount} ${unit}`;
+        case EVENT.PUMPING:
+            return `${getDisplayValue(event)} ${amount} ${unit}`;
+        default:
+            return '';
     }
+};
 
-    return feeding === FEEDING.BREAST ? getDisplayValue(breast) : getDisplayValue(feeding);
-}
-
-function getDurationOrAmount({feeding, duration, amount}) {
-    if (!feeding) {
-        return '';
-    }
-
-    return feeding === FEEDING.BREAST ? `${duration} minutes` : `${amount}`;
-}
-
-function LogItem(props) {
-    const {
-        amount,
-        breast,
-        date,
-        diaper,
-        duration,
-        event,
-        feeding,
-        id,
-        logId,
-        mood,
-        notes,
-        time
-    } = toDisplayedEntry(props);
-
-    const breastOrBottle = getBreastOrBottle({
-        event,
-        feeding,
-        breast
-    });
-
-    const durationOrAmount = getDurationOrAmount({
-        feeding,
-        duration,
-        amount
-    });
+export default (props) => {
+    const entry = toDisplayedEntry(props);
+    const {date, diaper, id, logId, mood, notes, time} = entry;
 
     return (
         <Table.Row key={id}>
             <Table.Cell>{time}</Table.Cell>
-            <Table.Cell>{breastOrBottle}</Table.Cell>
-            <Table.Cell>{durationOrAmount}</Table.Cell>
+            <Table.Cell>{getEventDetails(entry)}</Table.Cell>
             <Table.Cell>{getDisplayValue(diaper)}</Table.Cell>
             <Table.Cell>{mood}</Table.Cell>
             <Table.Cell>{notes}</Table.Cell>
@@ -71,6 +43,4 @@ function LogItem(props) {
             </Table.Cell>
         </Table.Row>
     );
-}
-
-export default LogItem;
+};

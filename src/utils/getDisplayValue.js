@@ -1,7 +1,8 @@
-import {FEEDING, BREAST, DIAPER} from '../utils/constants';
+import {EVENT, FEEDING, BREAST, DIAPER} from '../utils/constants';
 
-export default constant =>
+export default (constant) =>
     ({
+        [EVENT.PUMPING]: 'Pumped',
         [FEEDING.BOTTLE]: 'Bottle',
         [FEEDING.EXPRESSION]: 'Expression',
         [BREAST.BOTH]: 'Left/Right',
@@ -9,5 +10,5 @@ export default constant =>
         [BREAST.RIGHT]: 'Right',
         [DIAPER.DIRTY]: 'Dirty',
         [DIAPER.WET]: 'Wet',
-        [DIAPER.BOTH]: 'Both'
+        [DIAPER.BOTH]: 'Both',
     }[constant] || '');

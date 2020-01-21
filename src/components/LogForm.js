@@ -5,13 +5,13 @@ import {goTo, home} from '../utils/locations';
 
 const initialState = {
     title: '',
-    babyName: ''
+    babyName: '',
 };
 
 const handleLogChange = (log, setLog) => (e, {name, value}) => {
     setLog({
         ...log,
-        [name]: value
+        [name]: value,
     });
 };
 
@@ -23,7 +23,7 @@ const LogForm = ({log, saveLog}) => {
     useEffect(
         () =>
             setLogState({
-                ...log
+                ...log,
             }),
         [log]
     );
