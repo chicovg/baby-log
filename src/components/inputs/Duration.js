@@ -1,8 +1,10 @@
 import React from 'react';
 import { Form, Input } from 'semantic-ui-react';
 
-function Duration({ isBreastFeeding, duration, handleChange }) {
-    if (!isBreastFeeding) {
+import {FEEDING} from '../../utils/constants';
+
+export default ({ duration, feeding, handleChange }) => {
+    if (feeding !== FEEDING.BREAST) {
         return null;
     }
 
@@ -24,5 +26,3 @@ function Duration({ isBreastFeeding, duration, handleChange }) {
         </Form.Group>
     );
 }
-
-export default Duration;

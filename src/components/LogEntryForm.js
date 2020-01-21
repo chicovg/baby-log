@@ -64,7 +64,7 @@ const handleEntrySubmit = (logId, entry, saveEntry) => () => {
     );
 };
 
-function LogEntryForm({logId, date: dateProp, entry: entryProp, saveEntry}) {
+export default ({logId, date: dateProp, entry: entryProp, saveEntry}) => {
     const [entryState, setEntryState] = useState(
         toDisplayedEntry({
             ...initialState,
@@ -106,13 +106,13 @@ function LogEntryForm({logId, date: dateProp, entry: entryProp, saveEntry}) {
             </Form.Group>
             <Event event={event} handleChange={handleChange} />
             <Feeding
+                event={event}
                 feeding={feeding}
-                isFeeding={event === EVENT.FEEDING}
                 handleChange={handleChange}
             />
             <Breast
                 breast={breast}
-                isBreastFeeding={feeding === FEEDING.BREAST}
+                feeding={feeding}
                 handleChange={handleChange}
             />
             <Duration
@@ -140,6 +140,4 @@ function LogEntryForm({logId, date: dateProp, entry: entryProp, saveEntry}) {
             {/* <pre>{JSON.stringify(entryState, null, 2)}</pre> */}
         </Form>
     );
-}
-
-export default LogEntryForm;
+};

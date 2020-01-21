@@ -8,22 +8,22 @@ export default ({event, handleChange}) => {
         <Form.Group grouped>
             <label>Feeding or Diaper?</label>
             <Form.Radio
-                label="Feeding"
-                name="event"
+                label='Feeding'
+                name='event'
                 value={EVENT.FEEDING}
                 checked={event === EVENT.FEEDING}
                 onChange={handleChange}
             />
             <Form.Radio
-                label="Diaper"
-                name="event"
+                label='Diaper'
+                name='event'
                 value={EVENT.DIAPER}
                 checked={event === EVENT.DIAPER}
                 onChange={handleChange}
             />
             <Form.Radio
-                label="Pumping"
-                name="event"
+                label='Pumping'
+                name='event'
                 value={EVENT.PUMPING}
                 checked={event === EVENT.PUMPING}
                 onChange={handleChange}

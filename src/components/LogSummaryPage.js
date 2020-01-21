@@ -6,7 +6,7 @@ import LogSummary from './LogSummary';
 import LogSummaryNavigation from './LogSummaryNavigation';
 import {selectUserId, selectUserLogs} from '../redux/selectors';
 
-function LogSummaryPage() {
+export default () => {
     const userId = useSelector(selectUserId);
     const logs = useSelector(selectUserLogs(userId));
 
@@ -17,10 +17,8 @@ function LogSummaryPage() {
                 <Header as="h3">Create a new log to get started!</Header>
             ) : null}
             <Card.Group>
-                {logs ? logs.map(log => <LogSummary key={log.id} {...log} />) : null}
+                {logs ? logs.map((log) => <LogSummary key={log.id} {...log} />) : null}
             </Card.Group>
         </Container>
     );
-}
-
-export default LogSummaryPage;
+};
