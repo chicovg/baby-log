@@ -6,7 +6,7 @@ import {isLoaded, isEmpty, useFirebase, useFirestoreConnect} from 'react-redux-f
 import AppHeader from './AppHeader';
 import AppLoader from './AppLoader';
 import AppLocations from './AppLocations';
-import {selectAuth, selectDataRequested} from '../redux/selectors';
+import {selectAuth, selectDataRequested} from '../selectors';
 
 const Layout = () => {
     const firebase = useFirebase();

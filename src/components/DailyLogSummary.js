@@ -7,9 +7,9 @@ import {viewEntriesForDate} from '../utils/locations';
 export default ({logId, summaries}) => (
     <Card.Content extra>
         <Card.Header>Recent History</Card.Header>
-        <Table compact="very" striped>
+        <Table compact='very' striped>
             <Table.Header>
-                <Table.Row>
+                <Table.Row key='header'>
                     <Table.HeaderCell>Date</Table.HeaderCell>
                     <Table.HeaderCell>Feedings</Table.HeaderCell>
                     <Table.HeaderCell>Diapers</Table.HeaderCell>
@@ -17,7 +17,7 @@ export default ({logId, summaries}) => (
             </Table.Header>
             <Table.Body>
                 {summaries.map(({id, diapers, feedings}) => (
-                    <Table.Row id={id}>
+                    <Table.Row key={id}>
                         <Table.Cell>
                             <Link href={viewEntriesForDate.link(logId, id)}>
                                 {toSummaryDisplayDate(id)}

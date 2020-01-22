@@ -1,9 +1,10 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
-import {combineReducers, compose, createStore} from 'redux';
-import {ReactReduxFirebaseProvider, firebaseReducer} from 'react-redux-firebase';
-import {createFirestoreInstance, firestoreReducer, reduxFirestore} from 'redux-firestore';
+import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
+import thunk from 'redux-thunk';
+import {ReactReduxFirebaseProvider, firebaseReducer, getFirebase} from 'react-redux-firebase';
+import {createFirestoreInstance, firestoreReducer, reduxFirestore, getFirestore} from 'redux-firestore';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -22,7 +23,7 @@ const firebaseConfig = {
     projectId: 'baby-log-255211',
     storageBucket: 'baby-log-255211.appspot.com',
     messagingSenderId: '773291577572',
-    appId: '1:773291577572:web:7a63fef5cd3fda98e0dcf1'
+    appId: '1:773291577572:web:7a63fef5cd3fda98e0dcf1',
 };
 const rrfConfig = {};
 
@@ -31,23 +32,30 @@ if (!firebase.apps.length) {
     firebase.firestore();
 }
 
-const createStoreWithFirebase = compose(reduxFirestore(firebase, rrfConfig))(createStore);
-
 const rootReducer = combineReducers({
     firebase: firebaseReducer,
-    firestore: firestoreReducer
+    firestore: firestoreReducer,
 });
 
-const store = createStoreWithFirebase(
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const middlewares = [
+    thunk.withExtraArgument({getFirebase, getFirestore}),
+];
+
+const store = createStore(
     rootReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    composeEnhancers(
+        applyMiddleware(...middlewares),
+        reduxFirestore(firebase, rrfConfig),
+    ),
 );
 
 const rrfProps = {
     firebase,
     config: rrfConfig,
     dispatch: store.dispatch,
-    createFirestoreInstance
+    createFirestoreInstance,
 };
 
 render(

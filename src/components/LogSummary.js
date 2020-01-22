@@ -2,7 +2,7 @@ import React from 'react';
 import {Card} from 'semantic-ui-react';
 import {useSelector} from 'react-redux';
 
-import {selectLastUserLogDate, selectUserLogSummaries, selectUserId} from '../redux/selectors';
+import {selectLastUserLogDate, selectUserLogSummaries, selectUserId} from '../selectors';
 import {currentDateKey, previousDateKey} from '../utils/dates';
 import DailyLogSummary from './DailyLogSummary';
 import LogSummaryActions from './LogSummaryActions';

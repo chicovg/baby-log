@@ -3,7 +3,7 @@ import {
     selectUserLogEntriesForDate,
     selectUserLogSummaries,
     selectUserLogEntry
-} from './selectors';
+} from './index';
 import {EVENT} from '../utils/constants';
 
 const firestoreData = data => ({

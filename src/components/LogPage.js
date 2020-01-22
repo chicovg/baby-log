@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 
 import LogDateNavigation from './LogDateNavigation';
 import Log from './Log';
-import {selectUserId, selectUserLogEntriesForDate} from '../redux/selectors';
+import {selectUserId, selectUserLogEntriesForDate} from '../selectors';
 import {currentDateKey} from '../utils/dates';
 
 function LogPage({date: dateProp, logId}) {

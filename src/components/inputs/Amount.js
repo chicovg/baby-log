@@ -52,7 +52,7 @@ export default ({amount, unit, event, feeding, handleChange}) => {
 
     return (
         <Form.Group>
-            <Form.Field width='six'>
+            <Form.Field width='twelve'>
                 <label>Amount</label>
                 <Input
                     label={unitsDropdown}
@@ -62,7 +62,6 @@ export default ({amount, unit, event, feeding, handleChange}) => {
                     name='amount'
                     type='number'
                     value={amount}
-                    width='six'
                 />
             </Form.Field>
         </Form.Group>

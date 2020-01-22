@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import {useFirestore} from 'react-redux-firebase';
 
 import LogForm from './LogForm';
-import {selectUserId} from '../redux/selectors';
+import {selectUserId} from '../selectors';
 
 const CreateLogPage = () => {
     const userId = useSelector(selectUserId);

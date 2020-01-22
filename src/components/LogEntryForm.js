@@ -93,7 +93,7 @@ export default ({logId, date: dateProp, entry: entryProp, saveEntry}) => {
     const eventPopulated = date && time && event;
     const breastFeedingPopulated = feeding && breast && duration;
     const bottleFeedingPopulated = feeding && amount;
-    const pumpingPopulated = event === EVENT.PUMPING && amount;
+    const pumpingPopulated = event === EVENT.PUMPING && amount && unit;
     const submitEnabled =
         eventPopulated &&
         (breastFeedingPopulated || bottleFeedingPopulated || pumpingPopulated || diaper);
@@ -105,21 +105,9 @@ export default ({logId, date: dateProp, entry: entryProp, saveEntry}) => {
                 <Time time={time} handleChange={handleChange} />
             </Form.Group>
             <Event event={event} handleChange={handleChange} />
-            <Feeding
-                event={event}
-                feeding={feeding}
-                handleChange={handleChange}
-            />
-            <Breast
-                breast={breast}
-                feeding={feeding}
-                handleChange={handleChange}
-            />
-            <Duration
-                duration={duration}
-                isBreastFeeding={feeding === FEEDING.BREAST}
-                handleChange={handleChange}
-            />
+            <Feeding event={event} feeding={feeding} handleChange={handleChange} />
+            <Breast breast={breast} feeding={feeding} handleChange={handleChange} />
+            <Duration duration={duration} feeding={feeding} handleChange={handleChange} />
             <Amount
                 amount={amount}
                 event={event}
@@ -131,13 +119,13 @@ export default ({logId, date: dateProp, entry: entryProp, saveEntry}) => {
             <Mood mood={mood} handleChange={handleChange} />
             <Notes notes={notes} handleChange={handleChange} />
             <Divider hidden />
-            <Button disabled={!submitEnabled} primary type="submit">
+            <Button disabled={!submitEnabled} primary type='submit'>
                 Submit
             </Button>
-            <Button type="button" onClick={() => window.history.back()}>
+            <Button type='button' onClick={() => window.history.back()}>
                 Cancel
             </Button>
-            {/* <pre>{JSON.stringify(entryState, null, 2)}</pre> */}
+            <pre>{JSON.stringify(entryState, null, 2)}</pre>
         </Form>
     );
 };

@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 
 import LogSummary from './LogSummary';
 import LogSummaryNavigation from './LogSummaryNavigation';
-import {selectUserId, selectUserLogs} from '../redux/selectors';
+import {selectUserId, selectUserLogs} from '../selectors';
 
 export default () => {
     const userId = useSelector(selectUserId);

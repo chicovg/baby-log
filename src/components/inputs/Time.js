@@ -1,7 +1,7 @@
 import React from 'react';
 import { TimeInput } from 'semantic-ui-calendar-react';
 
-function Time({ time, handleChange }) {
+export default ({ time, handleChange }) => {
     return (
         <TimeInput
           name='time'
@@ -13,6 +13,4 @@ function Time({ time, handleChange }) {
           width='six'
         />
     );
-}
-
-export default Time;
+};
