@@ -1,25 +1,25 @@
-import React, {Fragment} from 'react';
+import React, { Fragment, useEffect} from 'react';
 import {Divider} from 'semantic-ui-react';
-import {useSelector} from 'react-redux';
-import {isLoaded, isEmpty, useFirebase, useFirestoreConnect} from 'react-redux-firebase';
+import {useSelector, useDispatch} from 'react-redux';
+import {isLoaded, isEmpty, useFirestoreConnect} from 'react-redux-firebase';
 
 import AppHeader from './AppHeader';
 import AppLoader from './AppLoader';
 import AppLocations from './AppLocations';
+import {loginToFirebase} from '../actions';
 import {selectAuth, selectDataRequested} from '../selectors';
 
-const Layout = () => {
-    const firebase = useFirebase();
+export default () => {
     const auth = useSelector(selectAuth);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (isLoaded(auth) && isEmpty(auth)) {
+            dispatch(loginToFirebase);
+        }
+    }, [auth, dispatch]);
+
     const userId = auth.uid;
-
-    if (isLoaded(auth) && isEmpty(auth)) {
-        firebase.login({
-            provider: 'google',
-            type: 'redirect'
-        });
-    }
-
     const logsQuery = `users/${userId}/logs`;
     const entriesQuery = `users/${userId}/entries`;
 
@@ -38,5 +38,3 @@ const Layout = () => {
         </Fragment>
     );
 };
-
-export default Layout;

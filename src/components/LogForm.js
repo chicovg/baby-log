@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Form} from 'semantic-ui-react';
 
-import {goTo, home} from '../utils/locations';
-
 const initialState = {
     title: '',
     babyName: '',
@@ -15,7 +13,7 @@ const handleLogChange = (log, setLog) => (e, {name, value}) => {
     });
 };
 
-const handleLogSubmit = (log, saveLog) => () => saveLog(log).then(() => goTo(home.link()));
+const handleLogSubmit = (log, saveLog) => () => saveLog(log);
 
 const LogForm = ({log, saveLog}) => {
     const [logState, setLogState] = useState(initialState);

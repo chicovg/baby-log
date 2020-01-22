@@ -1,21 +1,16 @@
 import React from 'react';
 import {Container, Header} from 'semantic-ui-react';
-import {useSelector} from 'react-redux';
-import {useFirestore} from 'react-redux-firebase';
+import { useSelector, useDispatch} from 'react-redux';
 
 import LogForm from './LogForm';
+import {saveUpdatedLog} from '../actions';
 import {selectUserId} from '../selectors';
 
 const CreateLogPage = () => {
     const userId = useSelector(selectUserId);
-    const firestore = useFirestore();
+    const dispatch = useDispatch();
 
-    const saveLog = logToSave =>
-        firestore
-            .collection('users')
-            .doc(userId)
-            .collection('logs')
-            .add(logToSave);
+    const saveLog = (logToSave) => dispatch(saveUpdatedLog({userId, logToSave}));
 
     return (
         <Container>

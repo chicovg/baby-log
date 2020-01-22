@@ -1,22 +1,15 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
-import {useFirestore} from 'react-redux-firebase';
-
+import { useSelector, useDispatch} from 'react-redux';
 import {Container, Form, Message} from 'semantic-ui-react';
-import {goTo, home} from '../utils/locations';
 
-function DeleteLogPage({logId}) {
-    const userId = useSelector(state => state.firebase.auth.uid);
-    const firestore = useFirestore();
-    const goHome = () => goTo(home.link());
-    const deleteLog = () =>
-        firestore
-            .collection('users')
-            .doc(userId)
-            .collection('logs')
-            .doc(logId)
-            .delete()
-            .then(goHome);
+import {selectUserId} from '../selectors';
+import {deleteLog, goToHome} from '../actions';
+
+export default ({logId}) => {
+    const userId = useSelector(selectUserId);
+    const dispatch = useDispatch();
+    const dispatchDeleteLog = () => dispatch(deleteLog({userId, logId}))
+    const dispatchGoToHome = () => dispatch(goToHome);
 
     return (
         <Container>
@@ -28,14 +21,12 @@ function DeleteLogPage({logId}) {
             </Message>
             <Form>
                 <Form.Group inline>
-                    <Form.Button primary onClick={deleteLog}>
+                    <Form.Button primary onClick={dispatchDeleteLog}>
                         Confirm
                     </Form.Button>
-                    <Form.Button onClick={goHome}>Cancel</Form.Button>
+                    <Form.Button onClick={dispatchGoToHome}>Cancel</Form.Button>
                 </Form.Group>
             </Form>
         </Container>
     );
-}
-
-export default DeleteLogPage;
+};

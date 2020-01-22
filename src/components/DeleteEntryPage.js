@@ -1,23 +1,16 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
-import {useFirestore} from 'react-redux-firebase';
-
+import {useSelector, useDispatch} from 'react-redux';
 import {Container, Form, Message} from 'semantic-ui-react';
-import {goTo, viewEntriesForDate} from '../utils/locations';
 
-function DeleteEntryPage({logId, date, id}) {
-    const userId = useSelector(state => state.firebase.auth.uid);
-    const firestore = useFirestore();
+import {selectUserId} from '../selectors';
+import {deleteEntry, goToEntriesForDate} from '../actions';
 
-    const goToViewEntries = () => goTo(viewEntriesForDate.link(logId, date));
-    const deleteEntry = () =>
-        firestore
-            .collection('users')
-            .doc(userId)
-            .collection('entries')
-            .doc(id)
-            .delete()
-            .then(goToViewEntries);
+export default ({logId, date, id}) => {
+    const userId = useSelector(selectUserId);
+    const dispatch = useDispatch();
+
+    const dispatchDeleteEntry = () => dispatch(deleteEntry({userId, logId, id, date}))
+    const dispatchGoToDate = () => dispatch(goToEntriesForDate(logId, date));
 
     return (
         <Container>
@@ -27,14 +20,12 @@ function DeleteEntryPage({logId, date, id}) {
             </Message>
             <Form>
                 <Form.Group inline>
-                    <Form.Button primary onClick={deleteEntry}>
+                    <Form.Button primary onClick={dispatchDeleteEntry}>
                         Confirm
                     </Form.Button>
-                    <Form.Button onClick={goToViewEntries}>Cancel</Form.Button>
+                    <Form.Button onClick={dispatchGoToDate}>Cancel</Form.Button>
                 </Form.Group>
             </Form>
         </Container>
     );
 }
-
-export default DeleteEntryPage;

@@ -5,7 +5,7 @@ import {toSummaryDisplayDate} from '../utils/dates';
 import {viewEntriesForDate} from '../utils/locations';
 
 export default ({logId, summaries}) => (
-    <Card.Content extra>
+    <Card.Content extra className='daily-summary'>
         <Card.Header>Recent History</Card.Header>
         <Table compact='very' striped>
             <Table.Header>
