@@ -49,6 +49,7 @@
     "@storybook/addon-actions": "^5.3.7",
     "@storybook/addon-links": "^5.3.7",
     "@storybook/addons": "^5.3.7",
-    "@storybook/preset-create-react-app": "^1.5.2"
+    "@storybook/preset-create-react-app": "^1.5.2",
+    "sinon": "^8.1.0"
   }
 }
