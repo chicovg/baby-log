@@ -7,7 +7,7 @@ import Log from './Log';
 import {selectUserId, selectUserLogEntriesForDate} from '../selectors';
 import {currentDateKey} from '../utils/dates';
 
-function LogPage({date: dateProp, logId}) {
+export default ({date: dateProp, logId}) => {
     const userId = useSelector(selectUserId);
     const date = dateProp || currentDateKey();
     const entries = useSelector(selectUserLogEntriesForDate(userId, logId, date));
@@ -18,6 +18,4 @@ function LogPage({date: dateProp, logId}) {
             <Log logEntries={entries} logId={logId} />
         </Container>
     );
-}
-
-export default LogPage;
+};

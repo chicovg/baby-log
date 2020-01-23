@@ -1,0 +1,42 @@
+#+TITLE: Stories design
+
+Stories will be organized by level, each file will be prefixed with a number
+indicating it's level so they show up top to bottom in the storybook.
+
+* Level 0
+** Layout
+* Level 1
+** AppHeader
+** AppLoader
+** AppLocations
+*** loading...
+*** should I have a story for each route?
+* Level 2
+** LogSummaryPage
+** CreateLogPage
+** EditLogPage
+** DeleteLogPage
+** LogPage
+** AddEntryPage
+** EditEntryPage
+** DeleteEntryPage
+* Level 3
+** LogSummaryNavigation
+** LogSummary
+** LogDateNavigation
+** Log
+** LogEntryForm
+** LogForm
+* Level 4
+** LogTitle
+** LogItem
+** Amount
+** Breast
+** Date
+** Diaper
+** Duration
+** Event
+** Feeding
+** Mood
+** Notes
+** Time

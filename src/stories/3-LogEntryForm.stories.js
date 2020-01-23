@@ -7,11 +7,6 @@ import LogEntryForm from '../components/LogEntryForm';
 import {BREAST, EVENT, FEEDING} from '../utils/constants';
 import {currentDateKey} from '../utils/dates';
 
-export default {
-    title: 'LogEntryForm',
-    component: LogEntryForm,
-};
-
 const withContainer = (component) => () => <Container>{component}</Container>
 
 const addEntryProps = {
@@ -62,3 +57,8 @@ const diaperEntryProps = {
 }
 
 export const EditDiaper = withContainer(<LogEntryForm {...diaperEntryProps} />);
+
+export default {
+    title: 'LogEntryForm',
+    component: LogEntryForm,
+};

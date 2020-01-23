@@ -2,29 +2,7 @@ import React from 'react';
 import {Dropdown, Form, Input} from 'semantic-ui-react';
 
 import {EVENT, FEEDING} from '../../utils/constants';
-
-const units = [
-    {
-        key: 1,
-        text: 'fl. oz.',
-        value: 'fl. oz.',
-    },
-    {
-        key: 2,
-        text: 'cup',
-        value: 'cup',
-    },
-    {
-        key: 3,
-        text: 'quart',
-        value: 'quart',
-    },
-    {
-        key: 4,
-        text: 'mL',
-        value: 'mL',
-    },
-];
+import useUnits from '../../hooks/use-units';
 
 const shouldHide = ({event, feeding}) => {
     if (event === EVENT.PUMPING) {
@@ -39,6 +17,8 @@ const shouldHide = ({event, feeding}) => {
 }
 
 export default ({amount, unit, event, feeding, handleChange}) => {
+    const {unitOptions} = useUnits();
+
     if (shouldHide({event, feeding})) {
         return null;
     }
@@ -47,7 +27,7 @@ export default ({amount, unit, event, feeding, handleChange}) => {
                             defaultValue='fl. oz.'
                             name='unit'
                             onChange={handleChange}
-                            options={units}
+                            options={unitOptions}
                           />;
 
     return (

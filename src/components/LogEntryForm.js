@@ -11,8 +11,7 @@ import Feeding from './inputs/Feeding';
 import Mood from './inputs/Mood';
 import Notes from './inputs/Notes';
 import Time from './inputs/Time';
-
-import {EVENT, FEEDING} from '../utils/constants';
+import {EVENT} from '../utils/constants';
 import {currentTime} from '../utils/dates';
 import {toDisplayedEntry, toStoredEntry} from '../utils/entries';
 import {goTo, viewEntriesForDate} from '../utils/locations';
@@ -125,7 +124,7 @@ export default ({logId, date: dateProp, entry: entryProp, saveEntry}) => {
             <Button type='button' onClick={() => window.history.back()}>
                 Cancel
             </Button>
-            <pre>{JSON.stringify(entryState, null, 2)}</pre>
+            {/* <pre>{JSON.stringify(entryState, null, 2)}</pre> */}
         </Form>
     );
 };
