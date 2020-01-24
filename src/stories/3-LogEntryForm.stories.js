@@ -5,13 +5,15 @@ import {Container} from 'semantic-ui-react';
 
 import LogEntryForm from '../components/LogEntryForm';
 import {BREAST, EVENT, FEEDING} from '../utils/constants';
-import {currentDateKey} from '../utils/dates';
 
 const withContainer = (component) => () => <Container>{component}</Container>
 
 const addEntryProps = {
-    date: currentDateKey(),
-    saveEntry: action(`save entry`),
+    handleChange: action(`handleChange`),
+    handleSubmit: action(`handleSubmit`),
+    entry: {
+        date: '2020-01-01',
+    },
 };
 
 export const AddEntry = withContainer(<LogEntryForm {...addEntryProps}/>);
@@ -19,6 +21,8 @@ export const AddEntry = withContainer(<LogEntryForm {...addEntryProps}/>);
 const bfEntryProps = {
     ...addEntryProps,
     entry: {
+        date: '2020-01-01',
+        time: '13:15',
         event: EVENT.FEEDING,
         feeding: FEEDING.BREAST,
         breast: BREAST.RIGHT,
@@ -31,6 +35,8 @@ export const EditBreastFeeding = withContainer(<LogEntryForm {...bfEntryProps} /
 const bottleEntryProps = {
     ...addEntryProps,
     entry: {
+        date: '2020-01-01',
+        time: '1:23',
         event: EVENT.FEEDING,
         feeding: FEEDING.BOTTLE,
         amount: 4,
@@ -43,6 +49,8 @@ export const EditBottleFeeding = withContainer(<LogEntryForm {...bottleEntryProp
 const pumpingEntryProps = {
     ...addEntryProps,
     entry: {
+        date: '2020-01-02',
+        time: '5:30',
         event: EVENT.PUMPING,
     },
 };
@@ -52,6 +60,8 @@ export const EditPumping = withContainer(<LogEntryForm {...pumpingEntryProps} />
 const diaperEntryProps = {
     ...addEntryProps,
     entry: {
+        date: '2020-01-02',
+        time: '15:30',
         event: EVENT.DIAPER,
     }
 }

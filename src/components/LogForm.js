@@ -5,9 +5,12 @@ import useUnits from '../hooks/use-units';
 const initialState = {
     title: '',
     babyName: '',
+    totalPumped: 0,
+    unit: 'fl. oz.',
 };
 
 const handleLogChange = (log, setLog) => (e, {name, value}) => {
+    console.log(`${name}:${value}`);
     setLog({
         ...log,
         [name]: value,
@@ -17,16 +20,12 @@ const handleLogChange = (log, setLog) => (e, {name, value}) => {
 const handleLogSubmit = (log, saveLog) => () => saveLog(log);
 
 const LogForm = ({log, saveLog}) => {
-    const [logState, setLogState] = useState(initialState);
+    console.log(log);
+    const [logState, setLogState] = useState({
+        ...initialState,
+        ...log,
+    });
     const {unitOptions} = useUnits();
-
-    useEffect(
-        () =>
-            setLogState({
-                ...log,
-            }),
-        [log]
-    );
 
     const {babyName, title, totalPumped, unit} = logState;
 
@@ -62,11 +61,11 @@ const LogForm = ({log, saveLog}) => {
                     width='six'
                 />
                 <Form.Dropdown
-                    defaultValue='fl. oz.'
                     name='defaultUnit'
                     label='Default Unit'
                     onChange={handleChange}
                     options={unitOptions}
+                    value={unit}
                     width='six'
                 />
             </Form.Group>

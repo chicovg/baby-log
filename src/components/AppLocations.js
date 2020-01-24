@@ -1,7 +1,7 @@
 import React from 'react';
 import {Location, Locations} from 'react-router-component';
 
-import AddEntryPage from './AddEntryPage';
+import CreateEntryPage from './CreateEntryPage';
 import CreateLogPage from './CreateLogPage';
 import DeleteEntryPage from './DeleteEntryPage';
 import DeleteLogPage from './DeleteLogPage';
@@ -30,7 +30,7 @@ function AppLocations({isLoaded}) {
             <Location path={deleteLog.path} handler={DeleteLogPage} />
             <Location path={viewEntries.path} handler={LogPage} />
             <Location path={viewEntriesForDate.path} handler={LogPage} />
-            <Location path={addEntry.path} handler={AddEntryPage} />
+            <Location path={addEntry.path} handler={CreateEntryPage} />
             <Location path={editEntry.path} handler={EditEntryPage} />
             <Location path={deleteEntry.path} handler={DeleteEntryPage} />
         </Locations>
