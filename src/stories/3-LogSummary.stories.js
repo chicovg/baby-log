@@ -49,9 +49,11 @@ const defaultEntries = times((n) => ({
     logId,
 }), 100).reduce((prev, curr) => ({...prev, [curr.id]: curr}), {});
 
-console.log(defaultEntries);
-
 export const Default = withWrappers(mockStore(defaultEntries))(
+    <LogSummary id={logId} title='My Log' />
+);
+
+export const NoData = withWrappers(mockStore([]))(
     <LogSummary id={logId} title='My Log' />
 );
 

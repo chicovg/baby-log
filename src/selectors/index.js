@@ -1,7 +1,9 @@
-import {compose} from 'redux';
-import orderBy from 'lodash/orderBy';
-import take from 'lodash/take';
-import {EVENT} from '../utils/constants';
+import compose from 'lodash/fp/compose';
+import orderBy from 'lodash/fp/orderBy';
+import take from 'lodash/fp/take';
+
+import {EVENT, FEEDING} from '../utils/constants';
+import {convert} from '../utils/units';
 
 export const objectToArray = (obj) =>
     Object.keys(obj)
@@ -37,7 +39,7 @@ const filterByLogId = (logId) => (entries = []) => entries.filter((entry) => ent
 
 const filterByDate = (date) => (entries = []) => entries.filter((entry) => entry.date === date);
 
-const sortByTime = (date) => (entries = []) => orderBy(entries, ['time']);
+const sortByTime = (date) => (entries = []) => orderBy(['time'], ['asc'], entries);
 
 const selectUserLogEntries = (userId, logId, date) =>
     compose(
@@ -69,36 +71,76 @@ const selectEntry = (id) => (entries = {}) => entries[id];
 export const selectUserLogEntry = (userId, logId, id) =>
     compose(selectEntry(id), selectLogEnriesObj, selectUser(userId), selectUsers);
 
-const updateCounts = (event, {diapers, feedings}) => ({
-    diapers: event === EVENT.DIAPER ? diapers + 1 : diapers,
-    feedings: event === EVENT.FEEDING ? feedings + 1 : feedings,
-});
+const normalizeUnits = (unitTo) => (entries = []) => entries.map((entry) => {
+    if (!(entry.amount && entry.unit)) {
+        return entry;
+    }
 
-const toDailySummaries = (summaries, {date, event}) => {
+    return {
+        ...entry,
+        amount: convert(entry.unit, unitTo, entry.amount),
+        unit: unitTo,
+    };
+})
+
+const setCounts = ({amount, event, feeding}, summary) => {
+    switch(event) {
+        case EVENT.DIAPER:
+            return {
+                ...summary,
+                diapers: summary.diapers + 1,
+            };
+        case EVENT.FEEDING: {
+            const feedings = summary.feedings + 1;
+            let pumped = summary.pumped;
+
+            if (feeding === FEEDING.BOTTLE) {
+                pumped -= amount;
+            }
+
+            return {
+                ...summary,
+                feedings,
+                pumped,
+            }
+        }
+        case EVENT.PUMPING:
+            return {
+                ...summary,
+                pumped: summary.pumped + amount,
+            }
+        default:
+            return summary;
+    };
+}
+
+const toDailySummaries = (summaries, entry) => {
     const emptySummary = {
         diapers: 0,
         feedings: 0,
+        pumped: 0,
     };
-    const summaryForDate = summaries[date] || emptySummary;
-    const updatedSummary = updateCounts(event, summaryForDate);
+    const summaryForDate = summaries[entry.date] || emptySummary;
+    const updatedSummary = setCounts(entry, summaryForDate);
 
     return {
         ...summaries,
-        [date]: updatedSummary,
+        [entry.date]: updatedSummary,
     };
 };
 
 const groupByLogDate = (entries = []) => entries.reduce(toDailySummaries, {});
 
-const sortById = (summaries = []) => orderBy(summaries, ['id'], ['desc']);
+const sortById = (summaries = []) => orderBy(['id'], ['desc'], summaries);
 
-const mostRecent = (summaries = []) => take(summaries, 7);
+const mostRecent = (summaries = []) => take(7, summaries);
 
-export const selectUserLogSummaries = (userId, logId) =>
+export const selectUserLogSummaries = (userId, logId, unit) =>
     compose(
         mostRecent,
         sortById,
         objectToArray,
         groupByLogDate,
+        normalizeUnits(unit),
         selectUserLogEntries(userId, logId)
     );

@@ -14,9 +14,10 @@ const LogSummary = ({id, title}) => {
     const dailySummaries = useSelector(selectUserLogSummaries(userId, id));
 
     return (
-        <Card>
+        <Card fluid>
             <LogSummaryHeader lastDate={lastDate} title={title} />
             <DailyLogSummary logId={id} summaries={dailySummaries} />
+            <PumpingSummary logId={id} />
             <LogSummaryActions logId={id} />
         </Card>
     );

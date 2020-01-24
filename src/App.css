@@ -39,11 +39,3 @@
 div.field {
     margin-bottom: 2px;
 }
-
-div.content {
-  flex-grow: 0 !important;
-}
-
-div.extra.content.daily-summary {
-  flex-grow: 1 !important;
-}

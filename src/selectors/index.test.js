@@ -2,119 +2,150 @@ import {
     selectLastUserLogDate,
     selectUserLogEntriesForDate,
     selectUserLogSummaries,
-    selectUserLogEntry
+    selectUserLogEntry,
 } from './index';
-import {EVENT} from '../utils/constants';
+import {EVENT, FEEDING} from '../utils/constants';
 
-const firestoreData = data => ({
+const firestoreData = (data) => ({
     firestore: {
-        data
-    }
+        data,
+    },
 });
 
 const userData = (userId, data) =>
     firestoreData({
         users: {
-            [userId]: data
-        }
+            [userId]: data,
+        },
     });
 
 const entriesData = (userId, entries) =>
     userData(userId, {
-        entries
+        entries,
     });
 
 const entries = {
-    e1: {
-        date: '2019-03-14',
-        time: '10:12',
-        logId: 'log1',
-        event: EVENT.DIAPER
-    },
-    e2: {
-        date: '2019-03-14',
-        time: '04:35',
-        logId: 'log1',
-        event: EVENT.FEEDING
-    },
-    e3: {
-        date: '2019-03-14',
-        time: '22:30',
-        logId: 'log1',
-        event: EVENT.FEEDING
-    },
-    e4: {
-        date: '2019-03-14',
-        time: '01:00',
-        logId: 'log2',
-        event: EVENT.DIAPER
-    },
-    e5: {
+    '03150012': {
         date: '2019-03-15',
         time: '00:12',
         logId: 'log1',
-        event: EVENT.DIAPER
+        event: EVENT.DIAPER,
     },
-    e6: {
+    '03141012': {
+        date: '2019-03-14',
+        time: '10:12',
+        logId: 'log1',
+        event: EVENT.DIAPER,
+    },
+    '03141130': {
+        date: '2019-03-14',
+        time: '11:30',
+        logId: 'log1',
+        event: EVENT.PUMPING,
+        amount: 4,
+        unit: 'fl. oz.',
+    },
+    '03140435': {
+        date: '2019-03-14',
+        time: '04:35',
+        logId: 'log1',
+        event: EVENT.FEEDING,
+        feeding: FEEDING.BOTTLE,
+        amount: 2,
+        unit: 'fl. oz.',
+    },
+    '03142230': {
+        date: '2019-03-14',
+        time: '22:30',
+        logId: 'log1',
+        event: EVENT.FEEDING,
+        feeding: FEEDING.BREAST,
+    },
+    '03140100': {
+        date: '2019-03-14',
+        time: '01:00',
+        logId: 'log2',
+        event: EVENT.DIAPER,
+    },
+    '03130834': {
         date: '2019-03-13',
         time: '8:34',
         logId: 'log1',
-        event: EVENT.FEEDING
+        event: EVENT.FEEDING,
+        feeding: FEEDING.BOTTLE,
+        amount: 2,
+        unit: 'fl. oz.',
     },
-    e7: {
+    '03121056': {
         date: '2019-03-12',
         time: '10:56',
         logId: 'log1',
-        event: EVENT.FEEDING
+        event: EVENT.FEEDING,
+        feeding: FEEDING.BOTTLE,
+        amount: 1,
+        unit: 'cup',
     },
-    e8: {
+    '03111231': {
         date: '2019-03-11',
         time: '12:31',
         logId: 'log1',
-        event: EVENT.DIAPER
+        event: EVENT.DIAPER,
     },
-    e9: {
+    '03111837': {
         date: '2019-03-11',
         time: '18:37',
         logId: 'log1',
-        event: EVENT.FEEDING
+        event: EVENT.FEEDING,
+        feeding: FEEDING.BREAST,
     },
-    e10: {
+    '03101422': {
         date: '2019-03-10',
         time: '14:22',
         logId: 'log1',
-        event: EVENT.DIAPER
+        event: EVENT.DIAPER,
     },
-    e11: {
+    '03101530': {
+        date: '2019-03-10',
+        time: '15:30',
+        logId: 'log1',
+        event: EVENT.PUMPING,
+        amount: 2,
+        unit: 'quart',
+    },
+    '03102305': {
         date: '2019-03-10',
         time: '23:05',
         logId: 'log1',
-        event: EVENT.DIAPER
+        event: EVENT.DIAPER,
     },
-    e12: {
+    '03090532': {
         date: '2019-03-09',
         time: '5:32',
         logId: 'log1',
-        event: EVENT.DIAPER
+        event: EVENT.DIAPER,
     },
-    e13: {
+    '03081056': {
         date: '2019-03-08',
         time: '10:56',
         logId: 'log1',
-        event: EVENT.FEEDING
+        event: EVENT.FEEDING,
+        feeding: FEEDING.BREAST,
     },
-    e14: {
+    '03071056': {
         date: '2019-03-07',
         time: '10:56',
         logId: 'log1',
-        event: EVENT.FEEDING
+        event: EVENT.FEEDING,
+        feeding: FEEDING.BOTTLE,
+        amount: 4,
+        unit: 'fl. oz.',
     },
-    e15: {
+    '03061056': {
         date: '2019-03-06',
         time: '10:56',
         logId: 'log1',
-        event: EVENT.DIAPER
-    }
+        event: EVENT.DIAPER,
+    },
 };
 
 describe('selectUserLogEntriesForDate', () => {
@@ -124,26 +155,39 @@ describe('selectUserLogEntriesForDate', () => {
         const state = entriesData(userId, entries);
         const sortedFilteredEntries = [
             {
-                id: 'e2',
+                logId,
+                id: '03140435',
+                amount: 2,
                 date: '2019-03-14',
                 event: EVENT.FEEDING,
+                feeding: FEEDING.BOTTLE,
                 time: '04:35',
-                logId
+                unit: 'fl. oz.',
             },
             {
-                id: 'e1',
+                logId,
+                id: '03141012',
                 date: '2019-03-14',
                 event: EVENT.DIAPER,
                 time: '10:12',
-                logId
             },
             {
-                id: 'e3',
+                logId,
+                id: '03141130',
+                amount: 4,
+                date: '2019-03-14',
+                event: EVENT.PUMPING,
+                time: '11:30',
+                unit: 'fl. oz.',
+            },
+            {
+                logId,
+                id: '03142230',
                 date: '2019-03-14',
                 event: EVENT.FEEDING,
+                feeding: FEEDING.BREAST,
                 time: '22:30',
-                logId
-            }
+            },
         ];
 
         expect(selectUserLogEntriesForDate(userId, logId, '2019-03-14')(state)).toEqual(
@@ -166,14 +210,14 @@ describe('selectUserLogEntry', () => {
     it('selects the log entry by id', () => {
         const userId = 'abc123';
         const logId = 'log1';
-        const entryId = 'e1';
+        const entryId = '03141012';
         const state = entriesData(userId, entries);
 
         expect(selectUserLogEntry(userId, logId, entryId)(state)).toStrictEqual({
             date: '2019-03-14',
             time: '10:12',
             logId: 'log1',
-            event: EVENT.DIAPER
+            event: EVENT.DIAPER,
         });
     });
 });
@@ -182,44 +226,52 @@ describe('selectUserLogSummaries', () => {
     it('summarizes the last 7 days worth of data', () => {
         const userId = 'abc123';
         const logId = 'log1';
+        const unit = 'fl. oz.';
         const state = entriesData(userId, entries);
 
-        expect(selectUserLogSummaries(userId, logId)(state)).toStrictEqual([
+        expect(selectUserLogSummaries(userId, logId, unit)(state)).toStrictEqual([
             {
                 diapers: 1,
                 feedings: 0,
-                id: '2019-03-15'
+                id: '2019-03-15',
+                pumped: 0,
             },
             {
                 diapers: 1,
                 feedings: 2,
-                id: '2019-03-14'
+                id: '2019-03-14',
+                pumped: 2,
             },
             {
                 diapers: 0,
                 feedings: 1,
-                id: '2019-03-13'
+                id: '2019-03-13',
+                pumped: -2,
             },
             {
                 diapers: 0,
                 feedings: 1,
-                id: '2019-03-12'
+                id: '2019-03-12',
+                pumped: -8,
             },
             {
                 diapers: 1,
                 feedings: 1,
-                id: '2019-03-11'
+                id: '2019-03-11',
+                pumped: 0,
             },
             {
                 diapers: 2,
                 feedings: 0,
-                id: '2019-03-10'
+                id: '2019-03-10',
+                pumped: 64,
             },
             {
                 diapers: 1,
                 feedings: 0,
-                id: '2019-03-09'
-            }
+                id: '2019-03-09',
+                pumped: 0,
+            },
         ]);
     });
 });
