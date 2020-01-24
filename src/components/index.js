@@ -20,7 +20,6 @@ export {default as LogSummaryHeader} from './LogSummaryHeader';
 export {default as LogSummaryNavigation} from './LogSummaryNavigation';
 export {default as LogSummaryPage} from './LogSummaryPage';
 export {default as LogTitle} from './LogTitle';
-export {default as PumpingSummary} from './PumpingSummary';
 
 export {default as Amount} from './inputs/Amount';
 export {default as Breast} from './inputs/Breast';

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Form} from 'semantic-ui-react';
 import useUnits from '../hooks/use-units';
 

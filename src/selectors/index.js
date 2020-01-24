@@ -84,30 +84,35 @@ const normalizeUnits = (unitTo) => (entries = []) => entries.map((entry) => {
 })
 
 const setCounts = ({amount, event, feeding}, summary) => {
+    const {
+        diapers,
+        feedings,
+        pumped,
+        drank,
+        net,
+    } = summary;
+
     switch(event) {
         case EVENT.DIAPER:
             return {
                 ...summary,
-                diapers: summary.diapers + 1,
+                diapers: diapers + 1,
             };
         case EVENT.FEEDING: {
-            const feedings = summary.feedings + 1;
-            let pumped = summary.pumped;
-
-            if (feeding === FEEDING.BOTTLE) {
-                pumped -= amount;
-            }
+            const isBottle = feeding === FEEDING.BOTTLE;
 
             return {
                 ...summary,
-                feedings,
-                pumped,
+                feedings: feedings + 1,
+                drank: isBottle ? drank + amount : drank,
+                net: isBottle ? net - amount : net,
             }
         }
         case EVENT.PUMPING:
             return {
                 ...summary,
-                pumped: summary.pumped + amount,
+                pumped: pumped + amount,
+                net: net + amount,
             }
         default:
             return summary;
@@ -119,6 +124,8 @@ const toDailySummaries = (summaries, entry) => {
         diapers: 0,
         feedings: 0,
         pumped: 0,
+        drank: 0,
+        net: 0,
     };
     const summaryForDate = summaries[entry.date] || emptySummary;
     const updatedSummary = setCounts(entry, summaryForDate);

@@ -1,20 +1,6 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 
 import {toDisplayedEntry, toStoredEntry} from '../utils/entries';
-
-const defaultEntryState = {
-    date: '',
-    time: '',
-    event: '',
-    feeding: '',
-    breast: '',
-    duration: '',
-    amount: '',
-    diaper: '',
-    mood: '',
-    notes: '',
-    userId: '',
-};
 
 export default ({initialState, saveEntry}) => {
     const [entry, setEntry] = useState(toDisplayedEntry(initialState));

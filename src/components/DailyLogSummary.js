@@ -5,7 +5,7 @@ import {toSummaryDisplayDate} from '../utils/dates';
 import {viewEntriesForDate} from '../utils/locations';
 import isEmpty from 'lodash/fp/isEmpty';
 
-export default ({logId, summaries}) => {
+export default ({logId, summaries, unit}) => {
     if (isEmpty(summaries)) {
         return null;
     }
@@ -19,11 +19,13 @@ export default ({logId, summaries}) => {
                         <Table.HeaderCell>Date</Table.HeaderCell>
                         <Table.HeaderCell>Feedings</Table.HeaderCell>
                         <Table.HeaderCell>Diapers</Table.HeaderCell>
-                        <Table.HeaderCell>Net. Pumped</Table.HeaderCell>;
+                        <Table.HeaderCell>Pumped ({unit})</Table.HeaderCell>
+                        <Table.HeaderCell>Drank ({unit})</Table.HeaderCell>
+                        <Table.HeaderCell>Net ({unit})</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                    {summaries.map(({id, diapers, feedings, pumped}) => (
+                    {summaries.map(({id, diapers, feedings, pumped, drank, net}) => (
                         <Table.Row key={id}>
                             <Table.Cell>
                                 <Link href={viewEntriesForDate.link(logId, id)}>
@@ -33,6 +35,8 @@ export default ({logId, summaries}) => {
                             <Table.Cell>{feedings}</Table.Cell>
                             <Table.Cell>{diapers}</Table.Cell>
                             <Table.Cell>{pumped}</Table.Cell>
+                            <Table.Cell>{drank}</Table.Cell>
+                            <Table.Cell>{net}</Table.Cell>
                         </Table.Row>
                     ))}
                 </Table.Body>
