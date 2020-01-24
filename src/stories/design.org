@@ -16,13 +16,13 @@ indicating it's level so they show up top to bottom in the storybook.
 ** DONE CreateLogPage
 ** DONE EditLogPage
 ** DeleteLogPage
-** LogPage
+** DONE LogPage
 ** CreateEntryPage
 ** DONE EditEntryPage
 ** DeleteEntryPage
 * Level 3
 ** LogSummaryNavigation
-** LogSummary
+** DONE LogSummary
 ** LogDateNavigation
 ** Log
 ** LogEntryForm

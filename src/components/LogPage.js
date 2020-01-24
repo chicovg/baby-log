@@ -1,6 +1,7 @@
 import React from 'react';
-import {Container} from 'semantic-ui-react';
+import {Container, Message} from 'semantic-ui-react';
 import {useSelector} from 'react-redux';
+import isEmpty from 'lodash/fp/isEmpty';
 
 import LogDateNavigation from './LogDateNavigation';
 import Log from './Log';
@@ -15,7 +16,11 @@ export default ({date: dateProp, logId}) => {
     return (
         <Container>
             <LogDateNavigation date={date} logId={logId} />
-            <Log logEntries={entries} logId={logId} />
+            {isEmpty(entries) ? (
+                <Message info>No entries logged today.</Message>
+            ) : (
+                <Log logEntries={entries} logId={logId} />
+            )}
         </Container>
     );
 };

@@ -11,7 +11,7 @@ export default ({logEntries, logId}) => (
         </Table.Header>
         <Table.Body>
             {logEntries.map(entry => (
-                <LogItem key={entry.id} logId={logId} {...entry} />
+                <LogItem key={entry.id} {...entry} />
             ))}
         </Table.Body>
     </Table>
