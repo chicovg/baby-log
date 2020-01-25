@@ -27,13 +27,14 @@ export const saveUpdatedLog = ({userId, logId, log}) => (
     getState,
     {getFirestore}
 ) =>
+    { console.log(log)
     getFirestore()
         .collection('users')
         .doc(userId)
         .collection('logs')
         .doc(logId)
         .set(log)
-        .then(() => dispatch(goToHome));
+        .then(() => dispatch(goToHome))};
 
 export const deleteLog = ({userId, logId}) => (
     dispatch,

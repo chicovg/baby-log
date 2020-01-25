@@ -6,10 +6,6 @@ import {viewEntriesForDate} from '../utils/locations';
 import isEmpty from 'lodash/fp/isEmpty';
 
 export default ({logId, summaries, unit}) => {
-    if (isEmpty(summaries)) {
-        return null;
-    }
-
     return (
         <Card.Content extra className='daily-summary'>
             <Card.Header>Recent History</Card.Header>
@@ -20,7 +16,7 @@ export default ({logId, summaries, unit}) => {
                         <Table.HeaderCell>Feedings</Table.HeaderCell>
                         <Table.HeaderCell>Diapers</Table.HeaderCell>
                         <Table.HeaderCell>Pumped ({unit})</Table.HeaderCell>
-                        <Table.HeaderCell>Drank ({unit})</Table.HeaderCell>
+                        <Table.HeaderCell>Bottle Fed ({unit})</Table.HeaderCell>
                         <Table.HeaderCell>Net ({unit})</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>

@@ -229,7 +229,7 @@ describe('selectUserLogSummaries', () => {
         const unit = 'fl. oz.';
         const state = entriesData(userId, entries);
 
-        expect(selectUserLogSummaries(userId, logId, unit)(state)).toStrictEqual([
+        const dailySummaries = [
             {
                 diapers: 1,
                 feedings: 0,
@@ -286,6 +286,26 @@ describe('selectUserLogSummaries', () => {
                 drank: 0,
                 net: 0,
             },
-        ]);
+        ];
+        const totals = {
+            diapers: 7,
+            drank: 16,
+            feedings: 7,
+            net: 52,
+            pumped: 68,
+        };
+        const averages = {
+            diapers: 1,
+            drank: 2.29,
+            feedings: 1,
+            net: 7.43,
+            pumped: 9.71,
+        };
+
+        expect(selectUserLogSummaries(userId, logId, unit)(state)).toStrictEqual({
+            averages,
+            dailySummaries,
+            totals,
+        });
     });
 });

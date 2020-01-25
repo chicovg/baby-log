@@ -12,6 +12,7 @@ export const logId = 'yyz678';
 export const log = {
     id: logId,
     title: 'My Baby\'s Log',
+    babyName: 'Baby',
     unit: 'fl. oz.',
 };
 

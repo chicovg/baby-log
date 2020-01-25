@@ -1,7 +1,13 @@
+import __ from 'lodash/fp/__';
 import compose from 'lodash/fp/compose';
+import divide from 'lodash/fp/divide';
 import orderBy from 'lodash/fp/orderBy';
+import mapValues from 'lodash/fp/mapValues';
+import size from 'lodash/fp/size';
 import take from 'lodash/fp/take';
+import uniqBy from 'lodash/fp/uniqBy';
 
+import roundTo from '../utils/roundTo';
 import {EVENT, FEEDING} from '../utils/constants';
 import {convert} from '../utils/units';
 
@@ -71,28 +77,67 @@ const selectEntry = (id) => (entries = {}) => entries[id];
 export const selectUserLogEntry = (userId, logId, id) =>
     compose(selectEntry(id), selectLogEnriesObj, selectUser(userId), selectUsers);
 
-const normalizeUnits = (unitTo) => (entries = []) => entries.map((entry) => {
-    if (!(entry.amount && entry.unit)) {
-        return entry;
-    }
+const normalizeUnits = (unitTo) => (entries = []) =>
+    entries.map((entry) => {
+        if (!(entry.amount && entry.unit)) {
+            return entry;
+        }
 
-    return {
-        ...entry,
-        amount: convert(entry.unit, unitTo, entry.amount),
-        unit: unitTo,
-    };
-})
+        return {
+            ...entry,
+            amount: convert(entry.unit, unitTo, entry.amount),
+            unit: unitTo,
+        };
+    });
+
+const emptySummary = {
+    diapers: 0,
+    feedings: 0,
+    pumped: 0,
+    drank: 0,
+    net: 0,
+};
+
+const toCount = ({date, amount, event, feeding}, summary) => {
+    switch (event) {
+        case EVENT.DIAPER:
+            return {
+                ...emptySummary,
+                date,
+                diapers: 1,
+            };
+        case EVENT.FEEDING: {
+            const isBottle = feeding === FEEDING.BOTTLE;
+
+            return {
+                ...emptySummary,
+                date,
+                feedings: 1,
+                drank: isBottle ? amount : 0,
+                net: isBottle ? 0 - amount : 0,
+            };
+        }
+        case EVENT.PUMPING:
+            return {
+                ...emptySummary,
+                date,
+                pumped: amount,
+                net: amount,
+            };
+        default:
+            return {
+                ...emptySummary,
+                date,
+            };
+    }
+};
+
+const toCounts = (entries = []) => entries.map(toCount);
 
 const setCounts = ({amount, event, feeding}, summary) => {
-    const {
-        diapers,
-        feedings,
-        pumped,
-        drank,
-        net,
-    } = summary;
+    const {diapers, feedings, pumped, drank, net} = summary;
 
-    switch(event) {
+    switch (event) {
         case EVENT.DIAPER:
             return {
                 ...summary,
@@ -106,48 +151,68 @@ const setCounts = ({amount, event, feeding}, summary) => {
                 feedings: feedings + 1,
                 drank: isBottle ? drank + amount : drank,
                 net: isBottle ? net - amount : net,
-            }
+            };
         }
         case EVENT.PUMPING:
             return {
                 ...summary,
                 pumped: pumped + amount,
                 net: net + amount,
-            }
+            };
         default:
             return summary;
-    };
-}
+    }
+};
 
-const toDailySummaries = (summaries, entry) => {
-    const emptySummary = {
-        diapers: 0,
-        feedings: 0,
-        pumped: 0,
-        drank: 0,
-        net: 0,
-    };
-    const summaryForDate = summaries[entry.date] || emptySummary;
-    const updatedSummary = setCounts(entry, summaryForDate);
+const sumCounts = (counts1, counts2) => ({
+    diapers: counts1.diapers + counts2.diapers,
+    feedings: counts1.feedings + counts2.feedings,
+    pumped: counts1.pumped + counts2.pumped,
+    drank: counts1.drank + counts2.drank,
+    net: counts1.net + counts2.net,
+});
+
+const toDailySummaries = (summaries, counts) => {
+    const summaryForDate = summaries[counts.date] || emptySummary;
 
     return {
         ...summaries,
-        [entry.date]: updatedSummary,
+        [counts.date]: sumCounts(summaryForDate, counts),
     };
 };
 
-const groupByLogDate = (entries = []) => entries.reduce(toDailySummaries, {});
+const groupByLogDate = (counts = []) => counts.reduce(toDailySummaries, {});
 
 const sortById = (summaries = []) => orderBy(['id'], ['desc'], summaries);
 
 const mostRecent = (summaries = []) => take(7, summaries);
 
+const getDailySummaries = compose(
+    mostRecent,
+    sortById,
+    objectToArray,
+    groupByLogDate,
+);
+
+const getTotals = (counts = []) => counts.reduce(sumCounts, emptySummary);
+
+const populateSummaries = (counts = []) => {
+    const dailySummaries = getDailySummaries(counts);
+    const totals = getTotals(counts);
+    const totalDays = compose(size, uniqBy('date'))(counts);
+    const averages = mapValues(compose(roundTo(2), divide(__, totalDays)), totals);
+
+    return {
+        averages,
+        dailySummaries,
+        totals,
+    };
+};
+
 export const selectUserLogSummaries = (userId, logId, unit) =>
     compose(
-        mostRecent,
-        sortById,
-        objectToArray,
-        groupByLogDate,
+        populateSummaries,
+        toCounts,
         normalizeUnits(unit),
         selectUserLogEntries(userId, logId)
     );

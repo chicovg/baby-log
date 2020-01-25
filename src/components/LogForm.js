@@ -1,38 +1,34 @@
-import React, {useState} from 'react';
-import {Button, Form} from 'semantic-ui-react';
-import useUnits from '../hooks/use-units';
+import React from 'react';
+import {Button, Divider, Form} from 'semantic-ui-react';
 
-const initialState = {
-    title: '',
-    babyName: '',
-    totalPumped: 0,
-    unit: 'fl. oz.',
-};
+import {OZ, CUP, QUART, ML} from '../utils/units';
 
-const handleLogChange = (log, setLog) => (e, {name, value}) => {
-    console.log(`${name}:${value}`);
-    setLog({
-        ...log,
-        [name]: value,
-    });
-};
+const unitOptions = [
+    {
+        key: ML,
+        text: 'Milliliter (mL)',
+        value: ML,
+    },
+    {
+        key: OZ,
+        text: 'US fluid ounce (fl. oz.)',
+        value: OZ,
+    },
+    {
+        key: CUP,
+        text: 'US liquid cup (cup)',
+        value: CUP,
+    },
+    {
+        key: QUART,
+        text: 'US liquid quart (qt.)',
+        value: QUART,
+    },
+];
 
-const handleLogSubmit = (log, saveLog) => () => saveLog(log);
-
-const LogForm = ({log, saveLog}) => {
-    console.log(log);
-    const [logState, setLogState] = useState({
-        ...initialState,
-        ...log,
-    });
-    const {unitOptions} = useUnits();
-
-    const {babyName, title, totalPumped, unit} = logState;
-
-    const handleChange = handleLogChange(logState, setLogState);
-
+const LogForm = ({log: {title, babyName, unit}, handleChange, handleSubmit}) => {
     return (
-        <Form onSubmit={handleLogSubmit(logState, saveLog)}>
+        <Form onSubmit={handleSubmit}>
             <Form.Group>
                 <Form.Input
                     name='title'
@@ -52,16 +48,8 @@ const LogForm = ({log, saveLog}) => {
                 />
             </Form.Group>
             <Form.Group>
-                <Form.Input
-                    name='totalPumped'
-                    label='Amount Pumped'
-                    onChange={handleChange}
-                    type='number'
-                    value={totalPumped}
-                    width='six'
-                />
                 <Form.Dropdown
-                    name='defaultUnit'
+                    name='unit'
                     label='Default Unit'
                     onChange={handleChange}
                     options={unitOptions}
@@ -69,7 +57,8 @@ const LogForm = ({log, saveLog}) => {
                     width='six'
                 />
             </Form.Group>
-            <Button primary type='submit'>
+            <Divider hidden />
+            <Button disabled={!(babyName || title || unit)} primary type='submit'>
                 Submit
             </Button>
             <Button type='button' onClick={() => window.history.back()}>
