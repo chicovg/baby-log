@@ -3,12 +3,10 @@ import {Card, Table} from 'semantic-ui-react';
 import {Link} from 'react-router-component';
 import {toSummaryDisplayDate} from '../utils/dates';
 import {viewEntriesForDate} from '../utils/locations';
-import isEmpty from 'lodash/fp/isEmpty';
 
 export default ({logId, summaries, unit}) => {
     return (
         <Card.Content extra className='daily-summary'>
-            <Card.Header>Recent History</Card.Header>
             <Table compact='very' striped>
                 <Table.Header>
                     <Table.Row key='header'>

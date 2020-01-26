@@ -8,6 +8,7 @@ import AppLoader from './AppLoader';
 import AppLocations from './AppLocations';
 import {loginToFirebase} from '../actions';
 import {selectAuth, selectDataRequested} from '../selectors';
+import {logs, logEntries} from '../firestore/queries';
 
 export default () => {
     const auth = useSelector(selectAuth);
@@ -20,8 +21,8 @@ export default () => {
     }, [auth, dispatch]);
 
     const userId = auth.uid;
-    const logsQuery = `users/${userId}/logs`;
-    const entriesQuery = `users/${userId}/entries`;
+    const logsQuery = logs(userId);
+    const entriesQuery = logEntries(userId);
 
     useFirestoreConnect([logsQuery, entriesQuery], [userId]);
 

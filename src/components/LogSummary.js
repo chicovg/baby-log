@@ -20,6 +20,9 @@ const LogSummary = ({id, title, unit}) => {
             <LogSummaryHeader lastDate={lastDate} title={title} />
             {isEmpty(dailySummaries) ? null : (
                 <Fragment>
+                    <Card.Content>
+                        <Card.Header>Recent History (past week)</Card.Header>
+                    </Card.Content>
                     <LogTotals averages={averages} totals={totals} unit={unit} />
                     <DailyLogSummary logId={id} summaries={dailySummaries} unit={unit} />
                 </Fragment>

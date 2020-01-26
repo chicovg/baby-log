@@ -25,7 +25,7 @@ export const selectAuth = (state) => state.firebase.auth;
 
 export const selectUserId = (state) => state.firebase.auth.uid;
 
-const selectUsers = (state) => state.firestore.data.users || {};
+const selectUsers = (state) => state.firestore.data.usersv1 || {};
 
 const selectUser = (userId) => (users) => users[userId] || {};
 
@@ -134,36 +134,6 @@ const toCount = ({date, amount, event, feeding}, summary) => {
 
 const toCounts = (entries = []) => entries.map(toCount);
 
-const setCounts = ({amount, event, feeding}, summary) => {
-    const {diapers, feedings, pumped, drank, net} = summary;
-
-    switch (event) {
-        case EVENT.DIAPER:
-            return {
-                ...summary,
-                diapers: diapers + 1,
-            };
-        case EVENT.FEEDING: {
-            const isBottle = feeding === FEEDING.BOTTLE;
-
-            return {
-                ...summary,
-                feedings: feedings + 1,
-                drank: isBottle ? drank + amount : drank,
-                net: isBottle ? net - amount : net,
-            };
-        }
-        case EVENT.PUMPING:
-            return {
-                ...summary,
-                pumped: pumped + amount,
-                net: net + amount,
-            };
-        default:
-            return summary;
-    }
-};
-
 const sumCounts = (counts1, counts2) => ({
     diapers: counts1.diapers + counts2.diapers,
     feedings: counts1.feedings + counts2.feedings,
@@ -198,8 +168,8 @@ const getTotals = (counts = []) => counts.reduce(sumCounts, emptySummary);
 
 const populateSummaries = (counts = []) => {
     const dailySummaries = getDailySummaries(counts);
-    const totals = getTotals(counts);
-    const totalDays = compose(size, uniqBy('date'))(counts);
+    const totals = getTotals(dailySummaries);
+    const totalDays = compose(size, uniqBy('id'))(dailySummaries);
     const averages = mapValues(compose(roundTo(2), divide(__, totalDays)), totals);
 
     return {

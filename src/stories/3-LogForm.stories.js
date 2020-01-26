@@ -8,19 +8,23 @@ import LogForm from '../components/LogForm';
 const withContainer = (component) => () => <Container>{component}</Container>
 
 const createLogProps = {
+    log: {
+        title: '',
+        babyName: '',
+        unit: 'fl. oz.',
+    },
     saveLog: action('save log'),
 };
 
 export const CreateLog = withContainer(<LogForm {...createLogProps}/>);
 
 const editLogProps = {
-    ...createLogProps,
     log: {
         title: 'A log',
         babyName: 'A baby',
-        totalPumped: 16,
-        defaultUnit: 'fl. oz.',
+        unit: 'fl. oz.',
     },
+    saveLog: action('save log'),
 }
 
 export const EditLog = withContainer(<LogForm {...editLogProps}/>);

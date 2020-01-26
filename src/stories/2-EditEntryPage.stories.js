@@ -24,7 +24,7 @@ const mockStore = {
         },
         firestore: {
             data: {
-                users: {
+                usersv1: {
                     [userId]: {
                         entries: {
                             entry1: {

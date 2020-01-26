@@ -1,30 +1,50 @@
+import compose from 'lodash/fp/compose';
+import get from 'lodash/fp/get';
+
 import {EVENT, FEEDING, BREAST, DIAPER} from '../utils/constants';
 
-const getDisplayValue = (constant) =>
+const getEventDisplayValue = (constant) =>
     ({
-        [EVENT.PUMPING]: 'Pumped',
+        [EVENT.DIAPER]: 'Diaper',
+        [EVENT.FEEDING]: 'Feeding',
+        [EVENT.PUMPING]: 'Pumping',
+    }[constant] || '');
+
+const getFeedingDisplayValue = (constant) =>
+    ({
         [FEEDING.BOTTLE]: 'Bottle',
+        [FEEDING.BREAST]: 'Breast',
         [FEEDING.EXPRESSION]: 'Expression',
+    }[constant] || '');
+
+const getBreastDisplayValue = (constant) =>
+    ({
         [BREAST.BOTH]: 'Both breasts',
         [BREAST.LEFT]: 'Left breast',
         [BREAST.RIGHT]: 'Right breast',
+    }[constant] || '');
+
+const getDiaperDisplayValue = (constant) =>
+    ({
         [DIAPER.DIRTY]: 'Dirty',
         [DIAPER.WET]: 'Wet',
         [DIAPER.BOTH]: 'Both',
     }[constant] || '');
 
-const getDurationDisplay = (d) => d > 1 ? `${d} minutes` : `${d} minute`;
+const getDurationDisplayValue = (d) => d > 1 ? `${d} minutes` : `${d} minute`;
+
+const formatEvent = compose(getEventDisplayValue, get('event'));
 
 const formatEventDetails = ({amount, breast, diaper, duration, event, feeding, unit}) => {
     switch (event) {
         case EVENT.DIAPER:
-            return `${getDisplayValue(diaper)} diaper`;
+            return `${getDiaperDisplayValue(diaper)}`;
         case EVENT.FEEDING:
             return feeding === FEEDING.BREAST
-                ? `${getDisplayValue(breast)}, ${getDurationDisplay(duration)}`
-                : `${getDisplayValue(feeding)}, ${amount} ${unit}`;
+                ? `${getBreastDisplayValue(breast)}, ${getDurationDisplayValue(duration)}`
+                : `${getFeedingDisplayValue(feeding)}, ${amount} ${unit}`;
         case EVENT.PUMPING:
-            return `${getDisplayValue(event)} ${amount} ${unit}`;
+            return `Pumped ${amount} ${unit}`;
         default:
             return '';
     }
@@ -32,6 +52,7 @@ const formatEventDetails = ({amount, breast, diaper, duration, event, feeding, u
 
 export default () => {
     return {
+        formatEvent,
         formatEventDetails,
     };
 }

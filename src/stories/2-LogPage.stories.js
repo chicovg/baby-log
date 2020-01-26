@@ -1,6 +1,5 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import {action} from '@storybook/addon-actions';
 import 'semantic-ui-css/semantic.css';
 import {Container} from 'semantic-ui-react';
 

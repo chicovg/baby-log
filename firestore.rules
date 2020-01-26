@@ -10,5 +10,14 @@ service cloud.firestore {
     match /users/{userId}/entries/{entries=*} {
       allow read, write: if request.auth.uid == userId;
     }
+    match /usersv1/{userId} {
+      allow read, write: if request.auth.uid == userId;
+    }
+    match /usersv1/{userId}/logs/{logs=*} {
+      allow read, write: if request.auth.uid == userId;
+    }
+    match /usersv1/{userId}/entries/{entries=*} {
+      allow read, write: if request.auth.uid == userId;
+    }
   }
 }

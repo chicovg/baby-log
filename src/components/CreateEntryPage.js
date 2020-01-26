@@ -6,13 +6,14 @@ import LogEntryForm from './LogEntryForm';
 import {saveNewEntry} from '../actions';
 import {useLogEntryState} from '../hooks';
 import {selectUserId} from '../selectors';
+import {currentTime} from '../utils/dates';
 
 export default ({logId, date}) => {
     const userId = useSelector(selectUserId);
-    const entry = {date, logId, userId};
+    const entry = {date, logId, time: currentTime(), userId};
 
     const dispatch = useDispatch();
-    const saveEntry = (entryToSave) => dispatch(saveNewEntry({logId, userId, entryToSave}));
+    const saveEntry = (entryToSave) => dispatch(saveNewEntry({logId, userId, entry: entryToSave}));
 
     const {entry: entryState, handleEntryChange, handleEntrySubmit} = useLogEntryState({
         initialState: entry,

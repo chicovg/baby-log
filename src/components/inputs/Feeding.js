@@ -32,13 +32,6 @@ export default ({event, feeding, handleChange}) => {
                 checked={feeding === FEEDING.EXPRESSION}
                 onChange={handleChange}
             />
-            <Form.Radio
-                label='Pumping'
-                name='feeding'
-                value={FEEDING.PUMP}
-                checked={feeding === FEEDING.PUMP}
-                onChange={handleChange}
-            />
         </Form.Group>
     );
 };

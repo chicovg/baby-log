@@ -14,7 +14,7 @@ const firestoreData = (data) => ({
 
 const userData = (userId, data) =>
     firestoreData({
-        users: {
+        usersv1: {
             [userId]: data,
         },
     });
@@ -288,17 +288,17 @@ describe('selectUserLogSummaries', () => {
             },
         ];
         const totals = {
-            diapers: 7,
-            drank: 16,
-            feedings: 7,
-            net: 52,
+            diapers: 6,
+            drank: 12,
+            feedings: 5,
+            net: 56,
             pumped: 68,
         };
         const averages = {
-            diapers: 1,
-            drank: 2.29,
-            feedings: 1,
-            net: 7.43,
+            diapers: 0.86,
+            drank: 1.71,
+            feedings: 0.71,
+            net: 8,
             pumped: 9.71,
         };
 

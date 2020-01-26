@@ -16,7 +16,7 @@ export const saveNewLog = ({userId, log}) => (
     {getFirestore},
 ) =>
     getFirestore()
-        .collection('users')
+        .collection('usersv1')
         .doc(userId)
         .collection('logs')
         .add(log)
@@ -29,7 +29,7 @@ export const saveUpdatedLog = ({userId, logId, log}) => (
 ) =>
     { console.log(log)
     getFirestore()
-        .collection('users')
+        .collection('usersv1')
         .doc(userId)
         .collection('logs')
         .doc(logId)
@@ -42,7 +42,7 @@ export const deleteLog = ({userId, logId}) => (
     {getFirestore}
 ) =>
     getFirestore()
-        .collection('users')
+        .collection('usersv1')
         .doc(userId)
         .collection('logs')
         .doc(logId)
@@ -55,7 +55,7 @@ export const saveNewEntry = ({userId, logId, entry}) => (
     {getFirestore},
 ) =>
     getFirestore()
-        .collection('users')
+        .collection('usersv1')
         .doc(userId)
         .collection('entries')
         .add({...entry})
@@ -67,7 +67,7 @@ export const saveUpdatedEntry = ({userId, logId, id, entry}) => (
     {getFirestore},
 ) =>
     getFirestore()
-        .collection('users')
+        .collection('usersv1')
         .doc(userId)
         .collection('entries')
         .doc(id)
@@ -80,7 +80,7 @@ export const deleteEntry = ({userId, logId, id, date}) => (
     {getFirestore},
 ) =>
     getFirestore()
-        .collection('users')
+        .collection('usersv1')
         .doc(userId)
         .collection('entries')
         .doc(id)

@@ -62,7 +62,7 @@ describe('saveNewLog', () => {
         expect(dispatch.called).toBeTruthy();
         expect(getState.called).toBeFalsy();
         expect(firestore.add.calledOnceWith(log)).toBeTruthy();
-        expect(firestore.collection.withArgs('users').calledOnce).toBeTruthy();
+        expect(firestore.collection.withArgs('usersv1').calledOnce).toBeTruthy();
         expect(firestore.collection.withArgs('logs').calledOnce).toBeTruthy();
         expect(firestore.doc.withArgs(userId).calledOnce).toBeTruthy();
     })
@@ -87,7 +87,7 @@ describe('saveUpdatedLog', () => {
 
         expect(dispatch.called).toBeTruthy();
         expect(getState.called).toBeFalsy();
-        expect(firestore.collection.withArgs('users').calledOnce).toBeTruthy();
+        expect(firestore.collection.withArgs('usersv1').calledOnce).toBeTruthy();
         expect(firestore.collection.withArgs('logs').calledOnce).toBeTruthy();
         expect(firestore.doc.withArgs(userId).calledOnce).toBeTruthy();
         expect(firestore.doc.withArgs(logId).calledOnce).toBeTruthy();
@@ -113,7 +113,7 @@ describe('deleteLog', () => {
 
         expect(dispatch.called).toBeTruthy();
         expect(getState.called).toBeFalsy();
-        expect(firestore.collection.withArgs('users').calledOnce).toBeTruthy();
+        expect(firestore.collection.withArgs('usersv1').calledOnce).toBeTruthy();
         expect(firestore.collection.withArgs('logs').calledOnce).toBeTruthy();
         expect(firestore.delete.called).toBeTruthy();
         expect(firestore.doc.withArgs(userId).calledOnce).toBeTruthy();
@@ -141,7 +141,7 @@ describe('saveNewEntry', () => {
         expect(dispatch.called).toBeTruthy();
         expect(getState.called).toBeFalsy();
         expect(firestore.add.calledOnceWith(entry)).toBeTruthy();
-        expect(firestore.collection.withArgs('users').calledOnce).toBeTruthy();
+        expect(firestore.collection.withArgs('usersv1').calledOnce).toBeTruthy();
         expect(firestore.collection.withArgs('entries').calledOnce).toBeTruthy();
         expect(firestore.doc.withArgs(userId).calledOnce).toBeTruthy();
     })
@@ -167,7 +167,7 @@ describe('saveUpdatedEntry', () => {
 
         expect(dispatch.called).toBeTruthy();
         expect(getState.called).toBeFalsy();
-        expect(firestore.collection.withArgs('users').calledOnce).toBeTruthy();
+        expect(firestore.collection.withArgs('usersv1').calledOnce).toBeTruthy();
         expect(firestore.collection.withArgs('entries').calledOnce).toBeTruthy();
         expect(firestore.doc.withArgs(userId).calledOnce).toBeTruthy();
         expect(firestore.doc.withArgs(id).calledOnce).toBeTruthy();
@@ -195,7 +195,7 @@ describe('deleteEntry', () => {
 
         expect(dispatch.called).toBeTruthy();
         expect(getState.called).toBeFalsy();
-        expect(firestore.collection.withArgs('users').calledOnce).toBeTruthy();
+        expect(firestore.collection.withArgs('usersv1').calledOnce).toBeTruthy();
         expect(firestore.collection.withArgs('entries').calledOnce).toBeTruthy();
         expect(firestore.delete.called).toBeTruthy();
         expect(firestore.doc.withArgs(userId).calledOnce).toBeTruthy();

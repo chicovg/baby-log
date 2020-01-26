@@ -14,11 +14,11 @@ export default ({averages, unit, totals}) => (
             </Statistic>
             <Statistic color='blue'>
                 <Statistic.Value >{averages.drank}</Statistic.Value>
-                <Statistic.Label>{unit} in bottles<br />per day</Statistic.Label>
+                <Statistic.Label>{unit} bottle fed<br />per day</Statistic.Label>
             </Statistic>
             <Statistic color='teal'>
                 <Statistic.Value>{totals.net}</Statistic.Value>
-                <Statistic.Label>{unit}<br />in storage</Statistic.Label>
+                <Statistic.Label>{unit}<br />net pumped</Statistic.Label>
             </Statistic>
         </Statistic.Group>
     </Card.Content>

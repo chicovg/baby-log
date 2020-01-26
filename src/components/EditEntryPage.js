@@ -12,7 +12,7 @@ export default ({logId, id}) => {
     const entry = useSelector(selectUserLogEntry(userId, logId, id));
 
     const dispatch = useDispatch();
-    const saveEntry = (entryToSave) => dispatch(saveUpdatedEntry({logId, userId, id, entryToSave}));
+    const saveEntry = (entryToSave) => dispatch(saveUpdatedEntry({logId, userId, id, entry: entryToSave}));
 
     const {entry: entryState, handleEntryChange, handleEntrySubmit} = useLogEntryState({
         initialState: entry,

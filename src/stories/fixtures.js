@@ -91,7 +91,7 @@ export const mockStore = ({
         },
         firestore: {
             data: {
-                users: {
+                usersv1: {
                     [uid]: {
                         entries,
                         logs,

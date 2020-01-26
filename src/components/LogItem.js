@@ -7,13 +7,14 @@ import {toDisplayedEntry} from '../utils/entries';
 import {editEntry, deleteEntry} from '../utils/locations';
 
 export default (props) => {
-    const {formatEventDetails} = useDisplayFormat();
+    const {formatEvent, formatEventDetails} = useDisplayFormat();
     const entry = toDisplayedEntry(props);
     const {date, id, logId, mood, notes, time} = entry;
 
     return (
         <Table.Row>
             <Table.Cell>{time}</Table.Cell>
+            <Table.Cell>{formatEvent(entry)}</Table.Cell>
             <Table.Cell>{formatEventDetails(entry)}</Table.Cell>
             <Table.Cell>{mood}</Table.Cell>
             <Table.Cell>{notes}</Table.Cell>
