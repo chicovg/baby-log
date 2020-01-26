@@ -1,8 +1,11 @@
 import __ from 'lodash/fp/__';
 import compose from 'lodash/fp/compose';
 import divide from 'lodash/fp/divide';
+import filter from 'lodash/fp/filter';
 import orderBy from 'lodash/fp/orderBy';
 import mapValues from 'lodash/fp/mapValues';
+import isEqual from 'lodash/fp/isEqual';
+import isNil from 'lodash/fp/isNil';
 import size from 'lodash/fp/size';
 import take from 'lodash/fp/take';
 import uniqBy from 'lodash/fp/uniqBy';
@@ -41,9 +44,12 @@ export const selectUserLog = (userId, logId) =>
 
 const selectLogEnriesObj = ({entries}) => entries || {};
 
-const filterByLogId = (logId) => (entries = []) => entries.filter((entry) => entry.logId === logId);
+const filterByLogId = (logId) => filter((entry) => entry.logId === logId);
 
-const filterByDate = (date) => (entries = []) => entries.filter((entry) => entry.date === date);
+const filterByDate = (date) => filter((entry) => entry.date === date);
+
+const filterByEventType = (eventType) =>
+    filter((entry) => isNil(eventType) || isEqual(entry.event, eventType));
 
 const sortByTime = (date) => (entries = []) => orderBy(['time'], ['asc'], entries);
 
@@ -56,8 +62,13 @@ const selectUserLogEntries = (userId, logId, date) =>
         selectUsers
     );
 
-export const selectUserLogEntriesForDate = (userId, logId, date) =>
-    compose(sortByTime(date), filterByDate(date), selectUserLogEntries(userId, logId));
+export const selectUserLogEntriesForDate = (userId, logId, date, eventType) =>
+    compose(
+        sortByTime(date),
+        filterByEventType(eventType),
+        filterByDate(date),
+        selectUserLogEntries(userId, logId)
+    );
 
 const lastEntryDate = (lastDate, {date}) => {
     if (!lastDate || date > lastDate) {
@@ -157,12 +168,7 @@ const sortById = (summaries = []) => orderBy(['id'], ['desc'], summaries);
 
 const mostRecent = (summaries = []) => take(7, summaries);
 
-const getDailySummaries = compose(
-    mostRecent,
-    sortById,
-    objectToArray,
-    groupByLogDate,
-);
+const getDailySummaries = compose(mostRecent, sortById, objectToArray, groupByLogDate);
 
 const getTotals = (counts = []) => counts.reduce(sumCounts, emptySummary);
 
@@ -180,9 +186,4 @@ const populateSummaries = (counts = []) => {
 };
 
 export const selectUserLogSummaries = (userId, logId, unit) =>
-    compose(
-        populateSummaries,
-        toCounts,
-        normalizeUnits(unit),
-        selectUserLogEntries(userId, logId)
-    );
+    compose(populateSummaries, toCounts, normalizeUnits(unit), selectUserLogEntries(userId, logId));

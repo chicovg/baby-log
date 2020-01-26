@@ -32,7 +32,10 @@
     "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
-    "extends": ["react-app", "plugin:lodash-fp/recommended"]
+    "extends": [
+      "react-app",
+      "plugin:lodash-fp/recommended"
+    ]
   },
   "browserslist": {
     "production": [
@@ -48,7 +51,7 @@
   },
   "devDependencies": {
     "@storybook/addon-actions": "^5.3.7",
-    "@storybook/addon-links": "^5.3.7",
+    "@storybook/addon-links": "^5.3.9",
     "@storybook/addons": "^5.3.7",
     "@storybook/preset-create-react-app": "^1.5.2",
     "eslint-plugin-lodash-fp": "^2.2.0-a1",

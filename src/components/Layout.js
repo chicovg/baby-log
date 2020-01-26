@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Divider} from 'semantic-ui-react';
 import {useSelector, useDispatch} from 'react-redux';
 import {isLoaded, isEmpty, useFirestoreConnect} from 'react-redux-firebase';
@@ -31,11 +31,11 @@ export default () => {
     const loaded = logsRequested && entriesRequested;
 
     return (
-        <Fragment>
+        <>
             <AppHeader />
             <Divider />
             <AppLoader isSignedIn={!isEmpty(auth)} isLoading={!loaded} />
             <AppLocations isLoaded={loaded} />
-        </Fragment>
+        </>
     );
 };

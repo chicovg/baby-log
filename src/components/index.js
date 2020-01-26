@@ -12,6 +12,7 @@ export {default as Layout} from './Layout';
 export {default as Log} from './Log';
 export {default as LogDateNavigation} from './LogDateNavigation';
 export {default as LogEntryForm} from './LogEntryForm';
+export {default as LogFilter} from './LogFilter';
 export {default as LogForm} from './LogForm';
 export {default as LogPage} from './LogPage';
 export {default as LogSummary} from './LogSummary';

@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {Card} from 'semantic-ui-react';
 import {useSelector} from 'react-redux';
 import isEmpty from 'lodash/fp/isEmpty';
@@ -19,13 +19,13 @@ const LogSummary = ({id, title, unit}) => {
         <Card fluid>
             <LogSummaryHeader lastDate={lastDate} title={title} />
             {isEmpty(dailySummaries) ? null : (
-                <Fragment>
+                <>
                     <Card.Content>
                         <Card.Header>Recent History (past week)</Card.Header>
                     </Card.Content>
                     <LogTotals averages={averages} totals={totals} unit={unit} />
                     <DailyLogSummary logId={id} summaries={dailySummaries} unit={unit} />
-                </Fragment>
+                </>
             )}
             <LogSummaryActions logId={id} />
         </Card>

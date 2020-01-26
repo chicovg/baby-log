@@ -190,9 +190,38 @@ describe('selectUserLogEntriesForDate', () => {
             },
         ];
 
-        expect(selectUserLogEntriesForDate(userId, logId, '2019-03-14')(state)).toEqual(
-            sortedFilteredEntries
-        );
+        expect(selectUserLogEntriesForDate(userId, logId, '2019-03-14', null)(state))
+            .toEqual(sortedFilteredEntries);
+    });
+
+    it('filters by event type', () => {
+        const userId = 'abc123';
+        const logId = 'log1';
+        const state = entriesData(userId, entries);
+        const sortedFilteredEntries = [
+            {
+                logId,
+                id: '03140435',
+                amount: 2,
+                date: '2019-03-14',
+                event: EVENT.FEEDING,
+                feeding: FEEDING.BOTTLE,
+                time: '04:35',
+                unit: 'fl. oz.',
+            },
+            {
+                logId,
+                id: '03142230',
+                date: '2019-03-14',
+                event: EVENT.FEEDING,
+                feeding: FEEDING.BREAST,
+                time: '22:30',
+            },
+        ];
+
+        expect(
+            selectUserLogEntriesForDate(userId, logId, '2019-03-14', EVENT.FEEDING)(state)
+        ).toEqual(sortedFilteredEntries);
     });
 });
 
