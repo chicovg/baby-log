@@ -8,10 +8,7 @@ export default ({initialState, saveLog}) => {
         [name]: value,
     });
 
-    const handleSubmit = () => {
-        console.log(log);
-        saveLog(log)
-    };
+    const handleSubmit = () => saveLog(log);
 
     return {
         log,

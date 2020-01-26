@@ -7,10 +7,11 @@ import {saveNewEntry} from '../actions';
 import {useLogEntryState} from '../hooks';
 import {selectUserId} from '../selectors';
 import {currentTime} from '../utils/dates';
+import {OZ} from '../utils/units';
 
 export default ({logId, date}) => {
     const userId = useSelector(selectUserId);
-    const entry = {date, logId, time: currentTime(), userId};
+    const entry = {date, logId, time: currentTime(), userId, unit: OZ};
 
     const dispatch = useDispatch();
     const saveEntry = (entryToSave) => dispatch(saveNewEntry({logId, userId, entry: entryToSave}));

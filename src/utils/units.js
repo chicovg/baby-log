@@ -4,7 +4,7 @@ import divide from 'lodash/fp/divide';
 import getOr from 'lodash/fp/getOr';
 import identity from 'lodash/fp/identity';
 import multiply from 'lodash/fp/multiply';
-import round from 'lodash/round';
+import roundTo from './roundTo';
 
 export const OZ='fl. oz.';
 export const CUP='cup';
@@ -35,5 +35,5 @@ const conversions = {
 };
 
 export const convert = curry((from, to, value) =>
-    round(getOr(identity, [from, to], conversions)(value), 4)
+    roundTo(4, getOr(identity, [from, to], conversions)(value))
 );

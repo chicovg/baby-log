@@ -10,11 +10,7 @@ export const loginToFirebase = (dispatch, getState, {getFirebase}) =>
         type: 'redirect',
     });
 
-export const saveNewLog = ({userId, log}) => (
-    dispatch,
-    getState,
-    {getFirestore},
-) =>
+export const saveNewLog = ({userId, log}) => (dispatch, getState, {getFirestore}) =>
     getFirestore()
         .collection('usersv1')
         .doc(userId)
@@ -22,25 +18,16 @@ export const saveNewLog = ({userId, log}) => (
         .add(log)
         .then(() => dispatch(goToHome));
 
-export const saveUpdatedLog = ({userId, logId, log}) => (
-    dispatch,
-    getState,
-    {getFirestore}
-) =>
-    { console.log(log)
+export const saveUpdatedLog = ({userId, logId, log}) => (dispatch, getState, {getFirestore}) =>
     getFirestore()
         .collection('usersv1')
         .doc(userId)
         .collection('logs')
         .doc(logId)
         .set(log)
-        .then(() => dispatch(goToHome))};
+        .then(() => dispatch(goToHome));
 
-export const deleteLog = ({userId, logId}) => (
-    dispatch,
-    getState,
-    {getFirestore}
-) =>
+export const deleteLog = ({userId, logId}) => (dispatch, getState, {getFirestore}) =>
     getFirestore()
         .collection('usersv1')
         .doc(userId)
@@ -49,11 +36,7 @@ export const deleteLog = ({userId, logId}) => (
         .delete()
         .then(() => dispatch(goToHome));
 
-export const saveNewEntry = ({userId, logId, entry}) => (
-    dispatch,
-    getState,
-    {getFirestore},
-) =>
+export const saveNewEntry = ({userId, logId, entry}) => (dispatch, getState, {getFirestore}) =>
     getFirestore()
         .collection('usersv1')
         .doc(userId)
@@ -64,7 +47,7 @@ export const saveNewEntry = ({userId, logId, entry}) => (
 export const saveUpdatedEntry = ({userId, logId, id, entry}) => (
     dispatch,
     getState,
-    {getFirestore},
+    {getFirestore}
 ) =>
     getFirestore()
         .collection('usersv1')
@@ -74,11 +57,7 @@ export const saveUpdatedEntry = ({userId, logId, id, entry}) => (
         .set(entry)
         .then(() => dispatch(goToEntriesForDate(logId, entry.date)));
 
-export const deleteEntry = ({userId, logId, id, date}) => (
-    dispatch,
-    getState,
-    {getFirestore},
-) =>
+export const deleteEntry = ({userId, logId, id, date}) => (dispatch, getState, {getFirestore}) =>
     getFirestore()
         .collection('usersv1')
         .doc(userId)
