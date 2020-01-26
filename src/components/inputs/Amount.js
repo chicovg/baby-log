@@ -40,7 +40,9 @@ export default ({amount, unit, event, feeding, handleChange}) => {
                     placeholder='ex. 4'
                     onChange={handleChange}
                     name='amount'
+                    min='0'
                     type='number'
+                    step='0.01'
                     value={amount}
                 />
             </Form.Field>
