@@ -1,4 +1,3 @@
-import sinon from 'sinon';
 import {
     goToHome,
     goToEntriesForDate,
@@ -30,54 +29,68 @@ describe('goToEntriesForDate', () => {
 
 describe('loginToFirebase', () => {
     it('calls the firebase login function', () => {
-        let dispatch = sinon.stub();
-        let getState = sinon.stub();
-        let login = sinon.stub();
-        let getFirebase = () => ({login});
+        const dispatch = jest.fn();
+        const getState = jest.fn();
+        const login = jest.fn();
+        const getFirebase = () => ({login});
 
         loginToFirebase(dispatch, getState, {getFirebase});
 
-        expect(dispatch.called).toBeFalsy();
-        expect(getState.called).toBeFalsy();
-        expect(login.calledOnceWith({provider: 'google', type: 'redirect'}));
+        expect(dispatch.mock.calls.length).toBe(0);
+        expect(getState.mock.calls.length).toBe(0);
+        expect(login.mock.calls[0][0]).toStrictEqual({provider: 'google', type: 'redirect'});
     })
 });
 
+const mockFireStore = () => {
+    const add = jest.fn();
+    const collection = jest.fn();
+    const deleteFn = jest.fn();
+    const doc = jest.fn();
+    const set = jest.fn();
+    const firestore = {
+        add,
+        collection,
+        delete: deleteFn,
+        doc,
+        set,
+    };
+    add.mockResolvedValue(true);
+    collection.mockReturnValue(firestore);
+    deleteFn.mockResolvedValue(true);
+    doc.mockReturnValue(firestore);
+    set.mockResolvedValue(true);
+
+    return firestore;
+};
+
 describe('saveNewLog', () => {
     it('calls firestore with the expected args', async () => {
-        let dispatch = sinon.stub();
-        let getState = sinon.stub();
-        let firestore = {
-            add: sinon.stub().resolves(true),
-            collection: sinon.stub().returnsThis(),
-            doc: sinon.stub().returnsThis(),
-        };
-        let getFirestore = () => firestore;
+        const dispatch = jest.fn();
+        const getState = jest.fn();
+        const firestore = mockFireStore();
+        const getFirestore = () => firestore;
 
         const userId = 'xxy';
         const log = {name: 'log'};
 
         await saveNewLog({userId, log})(dispatch, getState, {getFirestore});
 
-        expect(dispatch.called).toBeTruthy();
-        expect(getState.called).toBeFalsy();
-        expect(firestore.add.calledOnceWith(log)).toBeTruthy();
-        expect(firestore.collection.withArgs('usersv1').calledOnce).toBeTruthy();
-        expect(firestore.collection.withArgs('logs').calledOnce).toBeTruthy();
-        expect(firestore.doc.withArgs(userId).calledOnce).toBeTruthy();
+        expect(dispatch.mock.calls.length).toBe(1);
+        expect(getState.mock.calls.length).toBe(0);
+        expect(firestore.add.mock.calls[0][0]).toBe(log);
+        expect(firestore.collection.mock.calls[0][0]).toBe('usersv1');
+        expect(firestore.collection.mock.calls[1][0]).toBe('logs');
+        expect(firestore.doc.mock.calls[0][0]).toBe(userId);
     })
 });
 
 describe('saveUpdatedLog', () => {
     it('calls firestore with the expected args', async () => {
-        let dispatch = sinon.stub();
-        let getState = sinon.stub();
-        let firestore = {
-            collection: sinon.stub().returnsThis(),
-            doc: sinon.stub().returnsThis(),
-            set: sinon.stub().resolves(true),
-        };
-        let getFirestore = () => firestore;
+        const dispatch = jest.fn();
+        const getState = jest.fn();
+        const firestore = mockFireStore();
+        const getFirestore = () => firestore;
 
         const userId = 'xxy';
         const logId = 'foo';
@@ -85,52 +98,42 @@ describe('saveUpdatedLog', () => {
 
         await saveUpdatedLog({userId, logId, log})(dispatch, getState, {getFirestore});
 
-        expect(dispatch.called).toBeTruthy();
-        expect(getState.called).toBeFalsy();
-        expect(firestore.collection.withArgs('usersv1').calledOnce).toBeTruthy();
-        expect(firestore.collection.withArgs('logs').calledOnce).toBeTruthy();
-        expect(firestore.doc.withArgs(userId).calledOnce).toBeTruthy();
-        expect(firestore.doc.withArgs(logId).calledOnce).toBeTruthy();
-        expect(firestore.set.calledOnceWith(log));
+        expect(dispatch.mock.calls.length).toBe(1);
+        expect(getState.mock.calls.length).toBe(0);
+        expect(firestore.collection.mock.calls[0][0]).toBe('usersv1');
+        expect(firestore.collection.mock.calls[1][0]).toBe('logs');
+        expect(firestore.doc.mock.calls[0][0]).toBe(userId);
+        expect(firestore.set.mock.calls[0][0]).toBe(log);
     })
 });
 
 describe('deleteLog', () => {
     it('calls firestore with the expected args', async () => {
-        let dispatch = sinon.stub();
-        let getState = sinon.stub();
-        let firestore = {
-            collection: sinon.stub().returnsThis(),
-            delete: sinon.stub().resolves(true),
-            doc: sinon.stub().returnsThis(),
-        };
-        let getFirestore = () => firestore;
+        const dispatch = jest.fn();
+        const getState = jest.fn();
+        const firestore = mockFireStore();
+        const getFirestore = () => firestore;
 
         const userId = 'xxy';
         const logId = 'alog';
 
         await deleteLog({userId, logId})(dispatch, getState, {getFirestore});
 
-        expect(dispatch.called).toBeTruthy();
-        expect(getState.called).toBeFalsy();
-        expect(firestore.collection.withArgs('usersv1').calledOnce).toBeTruthy();
-        expect(firestore.collection.withArgs('logs').calledOnce).toBeTruthy();
-        expect(firestore.delete.called).toBeTruthy();
-        expect(firestore.doc.withArgs(userId).calledOnce).toBeTruthy();
-        expect(firestore.doc.withArgs(logId).calledOnce).toBeTruthy();
+        expect(dispatch.mock.calls.length).toBe(1);
+        expect(getState.mock.calls.length).toBe(0);
+        expect(firestore.collection.mock.calls[0][0]).toBe('usersv1');
+        expect(firestore.collection.mock.calls[1][0]).toBe('logs');
+        expect(firestore.delete.mock.calls.length).toBe(1);
+        expect(firestore.doc.mock.calls[0][0]).toBe(userId);
     })
 });
 
 describe('saveNewEntry', () => {
     it('calls firestore with the expected args', async () => {
-        let dispatch = sinon.stub();
-        let getState = sinon.stub();
-        let firestore = {
-            add: sinon.stub().resolves(true),
-            collection: sinon.stub().returnsThis(),
-            doc: sinon.stub().returnsThis(),
-        };
-        let getFirestore = () => firestore;
+        const dispatch = jest.fn();
+        const getState = jest.fn();
+        const firestore = mockFireStore();
+        const getFirestore = () => firestore;
 
         const userId = 'xxy';
         const logId = 'alog';
@@ -138,25 +141,21 @@ describe('saveNewEntry', () => {
 
         await saveNewEntry({userId, logId, entry})(dispatch, getState, {getFirestore});
 
-        expect(dispatch.called).toBeTruthy();
-        expect(getState.called).toBeFalsy();
-        expect(firestore.add.calledOnceWith(entry)).toBeTruthy();
-        expect(firestore.collection.withArgs('usersv1').calledOnce).toBeTruthy();
-        expect(firestore.collection.withArgs('entries').calledOnce).toBeTruthy();
-        expect(firestore.doc.withArgs(userId).calledOnce).toBeTruthy();
+        expect(dispatch.mock.calls.length).toBe(1);
+        expect(getState.mock.calls.length).toBe(0);
+        expect(firestore.add.mock.calls[0][0]).toStrictEqual(entry);
+        expect(firestore.collection.mock.calls[0][0]).toBe('usersv1');
+        expect(firestore.collection.mock.calls[1][0]).toBe('entries');
+        expect(firestore.doc.mock.calls[0][0]).toBe(userId);
     })
 });
 
 describe('saveUpdatedEntry', () => {
     it('calls firestore with the expected args', async () => {
-        let dispatch = sinon.stub();
-        let getState = sinon.stub();
-        let firestore = {
-            collection: sinon.stub().returnsThis(),
-            doc: sinon.stub().returnsThis(),
-            set: sinon.stub().resolves(true),
-        };
-        let getFirestore = () => firestore;
+        const dispatch = jest.fn();
+        const getState = jest.fn();
+        const firestore = mockFireStore();
+        const getFirestore = () => firestore;
 
         const userId = 'xxy';
         const logId = 'alog';
@@ -165,26 +164,21 @@ describe('saveUpdatedEntry', () => {
 
         await saveUpdatedEntry({userId, logId, id, entry})(dispatch, getState, {getFirestore});
 
-        expect(dispatch.called).toBeTruthy();
-        expect(getState.called).toBeFalsy();
-        expect(firestore.collection.withArgs('usersv1').calledOnce).toBeTruthy();
-        expect(firestore.collection.withArgs('entries').calledOnce).toBeTruthy();
-        expect(firestore.doc.withArgs(userId).calledOnce).toBeTruthy();
-        expect(firestore.doc.withArgs(id).calledOnce).toBeTruthy();
-        expect(firestore.set.calledOnceWith(entry));
+        expect(dispatch.mock.calls.length).toBe(1);
+        expect(getState.mock.calls.length).toBe(0);
+        expect(firestore.collection.mock.calls[0][0]).toBe('usersv1');
+        expect(firestore.collection.mock.calls[1][0]).toBe('entries');
+        expect(firestore.doc.mock.calls[0][0]).toBe(userId);
+        expect(firestore.set.mock.calls[0][0]).toStrictEqual(entry);
     })
 });
 
 describe('deleteEntry', () => {
     it('calls firestore with the expected args', async () => {
-        let dispatch = sinon.stub();
-        let getState = sinon.stub();
-        let firestore = {
-            collection: sinon.stub().returnsThis(),
-            delete: sinon.stub().resolves(true),
-            doc: sinon.stub().returnsThis(),
-        };
-        let getFirestore = () => firestore;
+        const dispatch = jest.fn();
+        const getState = jest.fn();
+        const firestore = mockFireStore();
+        const getFirestore = () => firestore;
 
         const userId = 'xxy';
         const logId = 'alog';
@@ -193,12 +187,11 @@ describe('deleteEntry', () => {
 
         await deleteEntry({userId, logId, id, date})(dispatch, getState, {getFirestore});
 
-        expect(dispatch.called).toBeTruthy();
-        expect(getState.called).toBeFalsy();
-        expect(firestore.collection.withArgs('usersv1').calledOnce).toBeTruthy();
-        expect(firestore.collection.withArgs('entries').calledOnce).toBeTruthy();
-        expect(firestore.delete.called).toBeTruthy();
-        expect(firestore.doc.withArgs(userId).calledOnce).toBeTruthy();
-        expect(firestore.doc.withArgs(id).calledOnce).toBeTruthy();
+        expect(dispatch.mock.calls.length).toBe(1);
+        expect(getState.mock.calls.length).toBe(0);
+        expect(firestore.collection.mock.calls[0][0]).toBe('usersv1');
+        expect(firestore.collection.mock.calls[1][0]).toBe('entries');
+        expect(firestore.delete.mock.calls.length).toBe(1);
+        expect(firestore.doc.mock.calls[0][0]).toBe(userId);
     })
 });
