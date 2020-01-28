@@ -1,10 +1,12 @@
 import React from 'react';
 import {Button, Divider, Form} from 'semantic-ui-react';
+import some from 'lodash/fp/some';
 
 import Amount from './inputs/Amount';
 import Breast from './inputs/Breast';
 import Date from './inputs/Date';
 import Diaper from './inputs/Diaper';
+import Description from './inputs/Description';
 import Duration from './inputs/Duration';
 import Event from './inputs/Event';
 import Feeding from './inputs/Feeding';
@@ -20,6 +22,7 @@ export default ({entry, handleChange, handleSubmit}) => {
         event,
         feeding,
         breast,
+        description,
         duration,
         amount,
         diaper,
@@ -32,9 +35,16 @@ export default ({entry, handleChange, handleSubmit}) => {
     const breastFeedingPopulated = feeding && breast && duration;
     const bottleFeedingPopulated = feeding && amount;
     const pumpingPopulated = event === EVENT.PUMPING && amount && unit;
+    const otherPopulated = event === EVENT.OTHER && description;
     const submitEnabled =
         eventPopulated &&
-        (breastFeedingPopulated || bottleFeedingPopulated || pumpingPopulated || diaper);
+        some(Boolean, [
+            breastFeedingPopulated,
+            bottleFeedingPopulated,
+            diaper,
+            pumpingPopulated,
+            otherPopulated,
+        ]);
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -45,7 +55,13 @@ export default ({entry, handleChange, handleSubmit}) => {
             <Event event={event} handleChange={handleChange} />
             <Feeding event={event} feeding={feeding} handleChange={handleChange} />
             <Breast breast={breast} feeding={feeding} handleChange={handleChange} />
-            <Duration duration={duration} feeding={feeding} handleChange={handleChange} />
+            <Description description={description} event={event} handleChange={handleChange} />
+            <Duration
+                duration={duration}
+                event={event}
+                feeding={feeding}
+                handleChange={handleChange}
+            />
             <Amount
                 amount={amount}
                 event={event}

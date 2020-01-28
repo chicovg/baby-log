@@ -16,25 +16,31 @@ const selectFilter = (eventValue) => {
             return linkTo('LogFilter', 'Select Feedings');
         case EVENT.PUMPING:
             return linkTo('LogFilter', 'Select Pumpings');
+        case EVENT.OTHER:
+            return linkTo('LogFilter', 'Select Other');
         default:
             return linkTo('LogFilter', 'Default');
     }
 };
 
 export const Default = withContainer(
-    <LogFilter event={null} selectFilter={selectFilter} />
+    <LogFilter eventType={null} selectFilter={selectFilter} />
 );
 
 export const SelectDiapers = withContainer(
-    <LogFilter event={EVENT.DIAPER} selectFilter={selectFilter} />
+    <LogFilter eventType={EVENT.DIAPER} selectFilter={selectFilter} />
 );
 
 export const SelectFeedings = withContainer(
-    <LogFilter event={EVENT.FEEDING} selectFilter={selectFilter} />
+    <LogFilter eventType={EVENT.FEEDING} selectFilter={selectFilter} />
 );
 
 export const SelectPumpings = withContainer(
-    <LogFilter event={EVENT.PUMPING} selectFilter={selectFilter} />
+    <LogFilter eventType={EVENT.PUMPING} selectFilter={selectFilter} />
+);
+
+export const SelectOther = withContainer(
+    <LogFilter eventType={EVENT.OTHER} selectFilter={selectFilter} />
 );
 
 export default {

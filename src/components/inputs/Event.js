@@ -6,7 +6,7 @@ import {EVENT} from '../../utils/constants';
 export default ({event, handleChange}) => {
     return (
         <Form.Group grouped>
-            <label>Feeding or Diaper?</label>
+            <label>Event</label>
             <Form.Radio
                 label='Feeding'
                 name='event'
@@ -26,6 +26,13 @@ export default ({event, handleChange}) => {
                 name='event'
                 value={EVENT.PUMPING}
                 checked={event === EVENT.PUMPING}
+                onChange={handleChange}
+            />
+            <Form.Radio
+                label='Other'
+                name='event'
+                value={EVENT.OTHER}
+                checked={event === EVENT.OTHER}
                 onChange={handleChange}
             />
         </Form.Group>

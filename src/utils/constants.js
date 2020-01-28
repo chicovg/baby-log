@@ -2,6 +2,7 @@ export const EVENT = {
     FEEDING: 'f',
     DIAPER: 'd',
     PUMPING: 'p',
+    OTHER: 'o',
 };
 
 export const FEEDING = {

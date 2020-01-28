@@ -1,8 +1,12 @@
-import {home, goTo, viewEntriesForDate} from '../utils/locations';
+import {deleteEntry as deleteEntryLoc, editEntry, home, goTo, viewEntriesForDate} from '../utils/locations';
 
 export const goToHome = () => goTo(home.link());
 
 export const goToEntriesForDate = (logId, date) => () => goTo(viewEntriesForDate.link(logId, date));
+
+export const goToEditEntry = (logId, id) => () => goTo(editEntry.link(logId, id));
+
+export const goToDeleteEntry = (logId, date, id) => () => goTo(deleteEntryLoc.link(logId, date, id));
 
 export const loginToFirebase = (dispatch, getState, {getFirebase}) =>
     getFirebase().login({

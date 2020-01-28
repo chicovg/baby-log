@@ -8,6 +8,7 @@ const getEventDisplayValue = (constant) =>
         [EVENT.DIAPER]: 'Diaper',
         [EVENT.FEEDING]: 'Feeding',
         [EVENT.PUMPING]: 'Pumping',
+        [EVENT.OTHER]: 'Other',
     }[constant] || '');
 
 const getFeedingDisplayValue = (constant) =>
@@ -31,11 +32,20 @@ const getDiaperDisplayValue = (constant) =>
         [DIAPER.BOTH]: 'Both',
     }[constant] || '');
 
-const getDurationDisplayValue = (d) => d > 1 ? `${d} minutes` : `${d} minute`;
+const getDurationDisplayValue = (d) => (d > 1 ? `${d} minutes` : `${d} minute`);
 
 const formatEvent = compose(getEventDisplayValue, get('event'));
 
-const formatEventDetails = ({amount, breast, diaper, duration, event, feeding, unit}) => {
+const formatEventDetails = ({
+    amount,
+    breast,
+    diaper,
+    description,
+    duration,
+    event,
+    feeding,
+    unit,
+}) => {
     switch (event) {
         case EVENT.DIAPER:
             return `${getDiaperDisplayValue(diaper)}`;
@@ -45,6 +55,8 @@ const formatEventDetails = ({amount, breast, diaper, duration, event, feeding, u
                 : `${getFeedingDisplayValue(feeding)}, ${amount} ${unit}`;
         case EVENT.PUMPING:
             return `Pumped ${amount} ${unit}`;
+        case EVENT.OTHER:
+            return duration ? `${description}, ${getDurationDisplayValue(duration)}` : `${description}`;
         default:
             return '';
     }
@@ -55,4 +67,4 @@ export default () => {
         formatEvent,
         formatEventDetails,
     };
-}
+};
