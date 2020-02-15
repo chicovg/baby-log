@@ -8,6 +8,7 @@ import {
     saveNewEntry,
     saveUpdatedEntry,
     deleteEntry,
+    userPath,
 } from './index';
 
 describe('goToHome', () => {
@@ -79,7 +80,7 @@ describe('saveNewLog', () => {
         expect(dispatch.mock.calls.length).toBe(1);
         expect(getState.mock.calls.length).toBe(0);
         expect(firestore.add.mock.calls[0][0]).toBe(log);
-        expect(firestore.collection.mock.calls[0][0]).toBe('usersv1');
+        expect(firestore.collection.mock.calls[0][0]).toBe(userPath);
         expect(firestore.collection.mock.calls[1][0]).toBe('logs');
         expect(firestore.doc.mock.calls[0][0]).toBe(userId);
     })
@@ -100,7 +101,7 @@ describe('saveUpdatedLog', () => {
 
         expect(dispatch.mock.calls.length).toBe(1);
         expect(getState.mock.calls.length).toBe(0);
-        expect(firestore.collection.mock.calls[0][0]).toBe('usersv1');
+        expect(firestore.collection.mock.calls[0][0]).toBe(userPath);
         expect(firestore.collection.mock.calls[1][0]).toBe('logs');
         expect(firestore.doc.mock.calls[0][0]).toBe(userId);
         expect(firestore.set.mock.calls[0][0]).toBe(log);
@@ -121,7 +122,7 @@ describe('deleteLog', () => {
 
         expect(dispatch.mock.calls.length).toBe(1);
         expect(getState.mock.calls.length).toBe(0);
-        expect(firestore.collection.mock.calls[0][0]).toBe('usersv1');
+        expect(firestore.collection.mock.calls[0][0]).toBe(userPath);
         expect(firestore.collection.mock.calls[1][0]).toBe('logs');
         expect(firestore.delete.mock.calls.length).toBe(1);
         expect(firestore.doc.mock.calls[0][0]).toBe(userId);
@@ -144,7 +145,7 @@ describe('saveNewEntry', () => {
         expect(dispatch.mock.calls.length).toBe(1);
         expect(getState.mock.calls.length).toBe(0);
         expect(firestore.add.mock.calls[0][0]).toStrictEqual(entry);
-        expect(firestore.collection.mock.calls[0][0]).toBe('usersv1');
+        expect(firestore.collection.mock.calls[0][0]).toBe(userPath);
         expect(firestore.collection.mock.calls[1][0]).toBe('entries');
         expect(firestore.doc.mock.calls[0][0]).toBe(userId);
     })
@@ -166,7 +167,7 @@ describe('saveUpdatedEntry', () => {
 
         expect(dispatch.mock.calls.length).toBe(1);
         expect(getState.mock.calls.length).toBe(0);
-        expect(firestore.collection.mock.calls[0][0]).toBe('usersv1');
+        expect(firestore.collection.mock.calls[0][0]).toBe(userPath);
         expect(firestore.collection.mock.calls[1][0]).toBe('entries');
         expect(firestore.doc.mock.calls[0][0]).toBe(userId);
         expect(firestore.set.mock.calls[0][0]).toStrictEqual(entry);
@@ -189,7 +190,7 @@ describe('deleteEntry', () => {
 
         expect(dispatch.mock.calls.length).toBe(1);
         expect(getState.mock.calls.length).toBe(0);
-        expect(firestore.collection.mock.calls[0][0]).toBe('usersv1');
+        expect(firestore.collection.mock.calls[0][0]).toBe(userPath);
         expect(firestore.collection.mock.calls[1][0]).toBe('entries');
         expect(firestore.delete.mock.calls.length).toBe(1);
         expect(firestore.doc.mock.calls[0][0]).toBe(userId);

@@ -1,15 +1,6 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /users/{userId} {
-      allow read, write: if request.auth.uid == userId;
-    }
-    match /users/{userId}/logs/{logs=*} {
-      allow read, write: if request.auth.uid == userId;
-    }
-    match /users/{userId}/entries/{entries=*} {
-      allow read, write: if request.auth.uid == userId;
-    }
     match /usersv1/{userId} {
       allow read, write: if request.auth.uid == userId;
     }
@@ -17,6 +8,15 @@ service cloud.firestore {
       allow read, write: if request.auth.uid == userId;
     }
     match /usersv1/{userId}/entries/{entries=*} {
+      allow read, write: if request.auth.uid == userId;
+    }
+    match /usersv2/{userId} {
+      allow read, write: if request.auth.uid == userId;
+    }
+    match /usersv2/{userId}/logs/{logs=*} {
+      allow read, write: if request.auth.uid == userId;
+    }
+    match /usersv2/{userId}/entries/{entries=*} {
       allow read, write: if request.auth.uid == userId;
     }
   }

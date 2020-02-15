@@ -1,7 +1,9 @@
-export const logs = (userId) => `usersv1/${userId}/logs`;
+const userPath = 'usersv2';
 
-export const logEntries = (userId) => `usersv1/${userId}/entries`;
+export const logs = (userId) => `${userPath}/${userId}/logs`;
 
-export const logById = (userId, logId) => `/usersv1/${userId}/logs/${logId}`;
+export const logEntries = (userId) => `${userPath}/${userId}/entries`;
 
-export const logEntriesById = (userId, logId) => `/usersv1/${userId}/logs/${logId}/entries`;
+export const logById = (userId, logId) => `/${userPath}/${userId}/logs/${logId}`;
+
+export const logEntriesById = (userId, logId) => `/${userPath}/${userId}/logs/${logId}/entries`;

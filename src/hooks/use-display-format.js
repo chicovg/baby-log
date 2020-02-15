@@ -1,5 +1,6 @@
 import compose from 'lodash/fp/compose';
 import get from 'lodash/fp/get';
+import toNumber from 'lodash/fp/toNumber';
 
 import {EVENT, FEEDING, BREAST, DIAPER} from '../utils/constants';
 
@@ -32,7 +33,22 @@ const getDiaperDisplayValue = (constant) =>
         [DIAPER.BOTH]: 'Both',
     }[constant] || '');
 
-const getDurationDisplayValue = (d) => (d > 1 ? `${d} minutes` : `${d} minute`);
+const getDurationDisplayValue = (hours, minutes) => {
+    const hoursValue = toNumber(hours);
+    const minutesValue = toNumber(minutes);
+    const hoursLabel = hoursValue === 1 ? `${hoursValue} hour` : `${hoursValue} hours`;
+    const minutesLabel = minutesValue === 1 ? `${minutesValue} minutes` : `${minutesValue} minutes`;
+
+    if (hoursValue && minutesValue) {
+        return `${hoursLabel} and ${minutesLabel}`;
+    } else if (hoursValue) {
+        return `${hoursLabel}`;
+    } else if (minutesValue) {
+        return `${minutesLabel}`;
+    } else {
+        return '';
+    }
+};
 
 const formatEvent = compose(getEventDisplayValue, get('event'));
 
@@ -41,7 +57,8 @@ const formatEventDetails = ({
     breast,
     diaper,
     description,
-    duration,
+    durationHours,
+    durationMinutes,
     event,
     feeding,
     unit,
@@ -51,12 +68,17 @@ const formatEventDetails = ({
             return `${getDiaperDisplayValue(diaper)}`;
         case EVENT.FEEDING:
             return feeding === FEEDING.BREAST
-                ? `${getBreastDisplayValue(breast)}, ${getDurationDisplayValue(duration)}`
+                ? `${getBreastDisplayValue(breast)}, ${getDurationDisplayValue(
+                      durationHours,
+                      durationMinutes
+                  )}`
                 : `${getFeedingDisplayValue(feeding)}, ${amount} ${unit}`;
         case EVENT.PUMPING:
             return `Pumped ${amount} ${unit}`;
         case EVENT.OTHER:
-            return duration ? `${description}, ${getDurationDisplayValue(duration)}` : `${description}`;
+            return durationHours || durationMinutes
+                ? `${description}, ${getDurationDisplayValue(durationHours, durationMinutes)}`
+                : `${description}`;
         default:
             return '';
     }

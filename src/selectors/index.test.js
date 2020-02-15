@@ -14,7 +14,7 @@ const firestoreData = (data) => ({
 
 const userData = (userId, data) =>
     firestoreData({
-        usersv1: {
+        usersv2: {
             [userId]: data,
         },
     });

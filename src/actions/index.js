@@ -14,9 +14,11 @@ export const loginToFirebase = (dispatch, getState, {getFirebase}) =>
         type: 'redirect',
     });
 
+export const userPath = 'usersv2';
+
 export const saveNewLog = ({userId, log}) => (dispatch, getState, {getFirestore}) =>
     getFirestore()
-        .collection('usersv1')
+        .collection(userPath)
         .doc(userId)
         .collection('logs')
         .add(log)
@@ -24,7 +26,7 @@ export const saveNewLog = ({userId, log}) => (dispatch, getState, {getFirestore}
 
 export const saveUpdatedLog = ({userId, logId, log}) => (dispatch, getState, {getFirestore}) =>
     getFirestore()
-        .collection('usersv1')
+        .collection(userPath)
         .doc(userId)
         .collection('logs')
         .doc(logId)
@@ -33,7 +35,7 @@ export const saveUpdatedLog = ({userId, logId, log}) => (dispatch, getState, {ge
 
 export const deleteLog = ({userId, logId}) => (dispatch, getState, {getFirestore}) =>
     getFirestore()
-        .collection('usersv1')
+        .collection(userPath)
         .doc(userId)
         .collection('logs')
         .doc(logId)
@@ -42,7 +44,7 @@ export const deleteLog = ({userId, logId}) => (dispatch, getState, {getFirestore
 
 export const saveNewEntry = ({userId, logId, entry}) => (dispatch, getState, {getFirestore}) =>
     getFirestore()
-        .collection('usersv1')
+        .collection(userPath)
         .doc(userId)
         .collection('entries')
         .add({...entry})
@@ -54,7 +56,7 @@ export const saveUpdatedEntry = ({userId, logId, id, entry}) => (
     {getFirestore}
 ) =>
     getFirestore()
-        .collection('usersv1')
+        .collection(userPath)
         .doc(userId)
         .collection('entries')
         .doc(id)
@@ -63,7 +65,7 @@ export const saveUpdatedEntry = ({userId, logId, id, entry}) => (
 
 export const deleteEntry = ({userId, logId, id, date}) => (dispatch, getState, {getFirestore}) =>
     getFirestore()
-        .collection('usersv1')
+        .collection(userPath)
         .doc(userId)
         .collection('entries')
         .doc(id)

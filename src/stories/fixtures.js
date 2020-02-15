@@ -40,7 +40,8 @@ export const generateEntries = ({
     events = defaultEvents,
     feedings = defaultFeedings,
     maxAmount = 8,
-    maxDuration = 60,
+    maxDurationHours = 4,
+    maxDurationMinutes = 60,
     seed,
     unit = 'fl. oz.',
 }) => {
@@ -61,7 +62,8 @@ export const generateEntries = ({
         const isBottle = feeding === FEEDING.BOTTLE;
         const breast = when(isBreast, () => breasts[randomInt(breasts.length)]);
         const description = when(isOther, () => descriptions[randomInt(descriptions.length)]);
-        const duration = when(isBreast || isOther, () => randomInt(maxDuration));
+        const durationHours = when(isBreast || isOther, () => randomInt(maxDurationHours));
+        const durationMinutes = when(isBreast || isOther, () => randomInt(maxDurationMinutes));
         const amount = when(isBottle || isPumping, () => randomInt(maxAmount));
         const hours = padCharsStart('0', 2, randomInt(24));
         const minutes = padCharsStart('0', 2, randomInt(60));
@@ -74,7 +76,8 @@ export const generateEntries = ({
             date,
             diaper,
             description,
-            duration,
+            durationHours,
+            durationMinutes,
             event,
             feeding,
             id: `${n}`,
@@ -94,7 +97,7 @@ export const mockStore = ({entries = {}, logs = {}, uid = userId}) => ({
         },
         firestore: {
             data: {
-                usersv1: {
+                usersv2: {
                     [uid]: {
                         entries,
                         logs,

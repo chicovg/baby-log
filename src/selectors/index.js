@@ -28,7 +28,7 @@ export const selectAuth = (state) => state.firebase.auth;
 
 export const selectUserId = (state) => state.firebase.auth.uid;
 
-const selectUsers = (state) => state.firestore.data.usersv1 || {};
+const selectUsers = (state) => state.firestore.data.usersv2 || {};
 
 const selectUser = (userId) => (users) => users[userId] || {};
 

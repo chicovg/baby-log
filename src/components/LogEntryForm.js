@@ -23,7 +23,8 @@ export default ({entry, handleChange, handleSubmit}) => {
         feeding,
         breast,
         description,
-        duration,
+        durationHours,
+        durationMinutes,
         amount,
         diaper,
         mood,
@@ -32,7 +33,7 @@ export default ({entry, handleChange, handleSubmit}) => {
     } = entry;
 
     const eventPopulated = date && time && event;
-    const breastFeedingPopulated = feeding && breast && duration;
+    const breastFeedingPopulated = feeding && breast;
     const bottleFeedingPopulated = feeding && amount;
     const pumpingPopulated = event === EVENT.PUMPING && amount && unit;
     const otherPopulated = event === EVENT.OTHER && description;
@@ -57,7 +58,8 @@ export default ({entry, handleChange, handleSubmit}) => {
             <Breast breast={breast} feeding={feeding} handleChange={handleChange} />
             <Description description={description} event={event} handleChange={handleChange} />
             <Duration
-                duration={duration}
+                durationHours={durationHours}
+                durationMinutes={durationMinutes}
                 event={event}
                 feeding={feeding}
                 handleChange={handleChange}
