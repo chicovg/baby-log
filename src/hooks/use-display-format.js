@@ -1,5 +1,3 @@
-import compose from 'lodash/fp/compose';
-import get from 'lodash/fp/get';
 import toNumber from 'lodash/fp/toNumber';
 
 import {EVENT, FEEDING, BREAST, DIAPER, MEAL_TYPE} from '../utils/constants';
