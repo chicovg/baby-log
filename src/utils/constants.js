@@ -1,6 +1,7 @@
 export const EVENT = {
-    FEEDING: 'f',
     DIAPER: 'd',
+    FEEDING: 'f',
+    MEAL: 'm',
     PUMPING: 'p',
     OTHER: 'o',
 };
@@ -21,4 +22,11 @@ export const DIAPER = {
     DIRTY: 'd',
     WET: 'w',
     BOTH: 't',
+};
+
+export const MEAL_TYPE = {
+    BREAKFAST: 'b',
+    LUNCH: 'l',
+    DINNER: 'd',
+    SNACK: 's',
 };

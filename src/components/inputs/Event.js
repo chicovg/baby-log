@@ -15,6 +15,13 @@ export default ({event, handleChange}) => {
                 onChange={handleChange}
             />
             <Form.Radio
+                label='Meal'
+                name='event'
+                value={EVENT.MEAL}
+                checked={event === EVENT.MEAL}
+                onChange={handleChange}
+            />
+            <Form.Radio
                 label='Diaper'
                 name='event'
                 value={EVENT.DIAPER}

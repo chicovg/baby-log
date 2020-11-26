@@ -2,7 +2,7 @@ import compose from 'lodash/fp/compose';
 import get from 'lodash/fp/get';
 import toNumber from 'lodash/fp/toNumber';
 
-import {EVENT, FEEDING, BREAST, DIAPER} from '../utils/constants';
+import {EVENT, FEEDING, BREAST, DIAPER, MEAL_TYPE} from '../utils/constants';
 
 const getEventDisplayValue = (constant) =>
     ({
@@ -50,7 +50,20 @@ const getDurationDisplayValue = (hours, minutes) => {
     }
 };
 
-const formatEvent = compose(getEventDisplayValue, get('event'));
+const getMealTypeDisplayValue = (constant) =>
+    ({
+        [MEAL_TYPE.BREAKFAST]: 'Breakfast',
+        [MEAL_TYPE.LUNCH]: 'Lunch',
+        [MEAL_TYPE.DINNER]: 'Dinner',
+        [MEAL_TYPE.SNACK]: 'Snack',
+    }[constant] || '');
+
+const formatEvent = ({event, mealType}) => {
+    if (mealType) {
+        return getMealTypeDisplayValue(mealType);
+    }
+    return getEventDisplayValue(event);
+}
 
 const formatEventDetails = ({
     amount,
@@ -61,6 +74,7 @@ const formatEventDetails = ({
     durationMinutes,
     event,
     feeding,
+    meal,
     unit,
 }) => {
     switch (event) {
@@ -75,6 +89,8 @@ const formatEventDetails = ({
                 : `${getFeedingDisplayValue(feeding)}, ${amount} ${unit}`;
         case EVENT.PUMPING:
             return `Pumped ${amount} ${unit}`;
+        case EVENT.MEAL:
+            return meal;
         case EVENT.OTHER:
             return durationHours || durationMinutes
                 ? `${description}, ${getDurationDisplayValue(durationHours, durationMinutes)}`

@@ -10,6 +10,8 @@ import Description from './inputs/Description';
 import Duration from './inputs/Duration';
 import Event from './inputs/Event';
 import Feeding from './inputs/Feeding';
+import Meal from './inputs/Meal';
+import MealType from './inputs/MealType';
 import Mood from './inputs/Mood';
 import Notes from './inputs/Notes';
 import Time from './inputs/Time';
@@ -27,6 +29,8 @@ export default ({entry, handleChange, handleSubmit}) => {
         durationMinutes,
         amount,
         diaper,
+        meal,
+        mealType,
         mood,
         notes,
         unit,
@@ -35,6 +39,7 @@ export default ({entry, handleChange, handleSubmit}) => {
     const eventPopulated = date && time && event;
     const breastFeedingPopulated = feeding && breast;
     const bottleFeedingPopulated = feeding && amount;
+    const mealPopulated = meal && mealType;
     const pumpingPopulated = event === EVENT.PUMPING && amount && unit;
     const otherPopulated = event === EVENT.OTHER && description;
     const submitEnabled =
@@ -43,8 +48,9 @@ export default ({entry, handleChange, handleSubmit}) => {
             breastFeedingPopulated,
             bottleFeedingPopulated,
             diaper,
-            pumpingPopulated,
+            mealPopulated,
             otherPopulated,
+            pumpingPopulated,
         ]);
 
     return (
@@ -57,6 +63,8 @@ export default ({entry, handleChange, handleSubmit}) => {
             <Feeding event={event} feeding={feeding} handleChange={handleChange} />
             <Breast breast={breast} feeding={feeding} handleChange={handleChange} />
             <Description description={description} event={event} handleChange={handleChange} />
+            <MealType mealType={mealType} event={event} handleChange={handleChange} />
+            <Meal meal={meal} event={event} handleChange={handleChange} />
             <Duration
                 durationHours={durationHours}
                 durationMinutes={durationMinutes}
