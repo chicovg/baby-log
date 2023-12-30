@@ -3,7 +3,7 @@ import {Container, Header} from 'semantic-ui-react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import LogForm from './LogForm';
-import {saveUpdatedLog} from '../actions';
+import {saveNewLog} from '../actions';
 import {useLogState} from '../hooks';
 import {selectUserId} from '../selectors';
 
@@ -15,7 +15,7 @@ const CreateLogPage = () => {
         unit: 'fl. oz.',
     };
     const dispatch = useDispatch();
-    const saveLog = (logToSave) => dispatch(saveUpdatedLog({userId, logToSave}));
+    const saveLog = (logToSave) => dispatch(saveNewLog({userId, logToSave}));
     const logState = useLogState({initialState, saveLog});
 
     return (
